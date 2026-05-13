@@ -20,10 +20,30 @@ Replace every line above with your actual stack before your first commit.
 ## How to work in this repo
 
 1. Read `.arkos/constitution.md`.
-2. Read the relevant spec in `.arkos/specs/` for the feature you are working on.
+2. Read the relevant spec in `.arkos/specs/` for the feature you are working on. If no spec exists, follow the "Starting a new feature" workflow below.
 3. Read open ADRs in `.arkos/adr/` that touch the area you are changing.
 4. Run the verify command (see Commands below) after every change. It must pass before you finish.
 5. Write commits using Conventional Commits format. Imperative mood. Reference the spec ID.
+
+## Starting a new feature (no spec exists yet)
+
+When the user describes a new feature, change, or idea and there is no matching spec in `.arkos/specs/`, do not write code first. Follow this sequence:
+
+1. **Write the spec.** Copy `.arkos/specs/_template.md` to `.arkos/specs/NNNN-<slug>.md` using the next available four-digit ID. Fill in every section: problem, out of scope (at least three items), EARS requirements, acceptance criteria table.
+2. **Declare data and trust boundaries.** Set `touches-personal-data` and `trust-boundaries-crossed` in the frontmatter. If either is non-empty, complete the privacy notes (APP 1, 5, 11) and create a STRIDE-lite threat model in `.arkos/threat-models/`.
+3. **File ADRs for architectural decisions.** If the feature introduces a new library, framework, external service, persistence model, auth model, or any other choice that future maintainers would want to know the reasoning behind, copy `.arkos/adr/_template.md` to `.arkos/adr/NNNN-<slug>.md` and complete it before writing code.
+4. **Define contracts at boundaries.** For any new external interface (HTTP API, message schema, file format), add the schema to `.arkos/contracts/` before implementing either side.
+5. **Confirm with the user.** Present the spec, ADRs, and threat model. Set `status: Approved` in the spec frontmatter only after the user accepts.
+6. **Then implement.** Write the code, write the tests that map to each REQ in the acceptance criteria table, and update `CHANGELOG.md` under `[Unreleased]`.
+7. **Open a PR on a feature branch.** Reference the spec ID in the commit message and PR title (`SPEC-NNNN`). CI runs the plan gate and build gate.
+
+If the user pushes back ("just write the code"), explain that the constitution mandates spec-before-code and offer to write a minimal spec to unblock them. Do not skip the spec.
+
+## Modifying an existing feature
+
+1. Find the spec in `.arkos/specs/`. If the change is in scope of the existing spec, update the spec (new REQ-IDs, new acceptance criteria) and link the PR to it.
+2. If the change is out of scope, write a new spec that references the original.
+3. If the change reverses or amends an architectural decision, file a new ADR that supersedes the old one. ADRs are immutable; do not edit existing ones.
 
 ## Commands
 
