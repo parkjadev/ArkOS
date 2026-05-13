@@ -19,7 +19,7 @@ criteria:
     automated: true
   - id: CRT-013
     description: Accessibility passes WCAG 2.2 AA
-    evidence: axe-core via Playwright reports zero violations
+    evidence: Accessibility test suite reports zero WCAG 2.2 AA violations
     automated: true
   - id: CRT-014
     description: Contracts honoured

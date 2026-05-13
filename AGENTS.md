@@ -37,12 +37,14 @@ Replace each `<placeholder>` with your actual command before your first commit.
 
 ## Banned patterns
 
-- Do not use `any` as a type annotation. Use `unknown` and narrow.
+- Do not use your language's untyped escape hatch (e.g. `any` in TypeScript, `Any` in Python). Use a typed alternative and narrow.
 - Do not commit secrets. Use environment files (gitignored) or the configured secret store.
 - Do not bypass the repository pattern for data access.
 - Do not call an external SDK or API that is not declared as a dependency without first proposing it via an ADR.
-- No `console.log` in committed code. Use the project logger.
+- No unstructured debug output (e.g. `console.log`, `print`) in committed code. Use the project logger.
 - No bare `TODO` comments. Format: `TODO(#<issue-number>): description`.
+
+Add stack-specific banned patterns here before your first commit.
 
 ## Context reading order
 

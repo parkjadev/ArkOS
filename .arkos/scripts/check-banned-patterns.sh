@@ -1,10 +1,17 @@
 #!/bin/bash
-# Checks staged files for banned patterns: console.log, `: any`, and bare TODO (without issue reference).
+# Checks staged files for banned patterns.
+#
+# The TODO check is universal. The two stack-specific checks below are
+# examples for JavaScript/TypeScript projects. Replace or remove them for
+# your stack before your first commit.
+#
+# To add a pattern:
+#   grep -n "your-pattern" "$file" && echo "ERROR: description" && FAILED=true
 set -euo pipefail
 
 FAILED=false
 
-# Get list of staged files (text files only)
+# Get list of staged files
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null || true)
 
 if [[ -z "$STAGED_FILES" ]]; then
@@ -18,23 +25,29 @@ while IFS= read -r file; do
     continue
   fi
 
-  # Check for console.log
-  if grep -n "console\.log" "$file" 2>/dev/null; then
-    echo "ERROR: console.log found in $file (line above)"
-    FAILED=true
-  fi
-
-  # Check for TypeScript `: any`
-  if grep -n ": any" "$file" 2>/dev/null; then
-    echo "ERROR: ': any' type found in $file (line above). Use 'unknown' and narrow."
-    FAILED=true
-  fi
-
-  # Check for bare TODO without an issue reference (allow TODO(#123) format)
+  # Universal: bare TODO without an issue reference.
+  # Allow TODO(#123) format only.
   if grep -nP "TODO(?!\(#[0-9]+\))" "$file" 2>/dev/null; then
-    echo "ERROR: Bare TODO found in $file (line above). Use TODO(#<issue-number>) format."
+    echo "ERROR: Bare TODO found in $file (see line above). Use TODO(#<issue-number>) format."
     FAILED=true
   fi
+
+  # Stack-specific example: unstructured debug output (JavaScript/TypeScript).
+  # Replace with the equivalent for your stack, or remove if not applicable.
+  # Python example: grep -n "^print(" "$file"
+  if grep -n "console\.log" "$file" 2>/dev/null; then
+    echo "ERROR: console.log found in $file (see line above). Use the project logger."
+    FAILED=true
+  fi
+
+  # Stack-specific example: untyped escape hatch (TypeScript).
+  # Replace with the equivalent for your stack, or remove if not applicable.
+  # Python example: grep -n ": Any" "$file" (from typing import Any)
+  if grep -n ": any" "$file" 2>/dev/null; then
+    echo "ERROR: ': any' type annotation found in $file (see line above). Use a typed alternative."
+    FAILED=true
+  fi
+
 done <<< "$STAGED_FILES"
 
 if [[ "$FAILED" == "true" ]]; then
