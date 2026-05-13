@@ -17,6 +17,12 @@ name: arkos
 #   ship-gate     — generates SBOM, verifies CHANGELOG, runs SAST and dependency scan
 #   run-readiness — prints the human sign-off checklist required before production promotion
 #
+# When each job runs:
+#   plan-gate     — every PR and every push to main
+#   build-gate    — every PR and every push to main (requires plan-gate to pass)
+#   ship-gate     — pushes to main only (requires build-gate to pass)
+#   run-readiness — pushes to main only (requires build-gate to pass)
+#
 # Nothing in this file pushes, publishes, or releases to any environment.
 
 on:
@@ -45,6 +51,8 @@ jobs:
     needs: plan-gate
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install dependencies
         run: |
@@ -95,6 +103,8 @@ jobs:
           echo "REPLACE: add your contract test command above and remove this line"
 
       - name: Banned pattern check
+        env:
+          GITHUB_BASE_REF: ${{ github.base_ref }}
         run: bash .arkos/scripts/check-banned-patterns.sh
 
   ship-gate:
@@ -107,13 +117,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Generate SBOM (CycloneDX)
         run: |
           # Replace with your stack's CycloneDX SBOM command.
           # Example (Node.js): pnpm exec cyclonedx-npm --output-file sbom.cdx.json
           # Example (Python):  cyclonedx-py --output sbom.cdx.json
+          # Other stacks: see https://cyclonedx.org/tool-center/
           echo "REPLACE: add your SBOM generation command above and remove this line"
 
       - name: Upload SBOM artefact
@@ -124,16 +135,44 @@ jobs:
           if-no-files-found: warn
 
       - name: Check CHANGELOG updated
+        env:
+          GITHUB_BASE_REF: ${{ github.base_ref }}
         run: bash .arkos/scripts/check-changelog.sh
 
       - name: SAST - static analysis
-        uses: github/codeql-action/analyze@v3
+        # Replace with a SAST tool appropriate for your stack.
+        #
+        # CodeQL (free for public repos, GitHub Advanced Security required for private):
+        #   CodeQL requires two steps: init (declares language) then analyze.
+        #   See https://docs.github.com/en/code-security/code-scanning/using-codeql-code-scanning-with-your-existing-ci-system
+        #   Example:
+        #     - uses: github/codeql-action/init@v3
+        #       with:
+        #         languages: javascript  # or python, java, go, ruby, swift, cpp, csharp
+        #     - uses: github/codeql-action/analyze@v3
+        #
+        # Semgrep (open source, works for all stacks):
+        #   - uses: returntocorp/semgrep-action@v1
+        #
+        # Remove this placeholder once you have configured a real SAST step.
+        run: |
+          echo "REPLACE: configure a SAST step for your stack (see comment above)"
 
       - name: Dependency vulnerability scan
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: fs
-          severity: CRITICAL,HIGH
+        # Replace with a dependency scanner appropriate for your stack.
+        #
+        # Trivy (works for most stacks, no token required):
+        #   - uses: aquasecurity/trivy-action@master
+        #     with:
+        #       scan-type: fs
+        #       severity: CRITICAL,HIGH
+        #
+        # OSV-Scanner (Google, open source):
+        #   - uses: google/osv-scanner-action@v1
+        #
+        # Remove this placeholder once you have configured a real scan step.
+        run: |
+          echo "REPLACE: configure a dependency scan step for your stack (see comment above)"
 
   run-readiness:
     name: Run readiness - operational checklist

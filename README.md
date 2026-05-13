@@ -2,83 +2,132 @@
 
 **The governed operating system for agentic software development.**
 
-ArkOS is a GitHub template repository that gives an enterprise solo developer everything they need to build production-grade software with AI coding agents from the first commit. Specs, decisions, gates and audit trails ship with the code.
+ArkOS is a GitHub template repository. Use it as the starting point for any project where you need an AI coding agent to behave like an enterprise engineer: spec-driven, auditable, and compliant with Australian security, privacy, and accessibility baselines.
+
+It is a files-and-conventions framework. No runtime. No inference proxy. No vendor lock-in. The governance travels with the codebase.
 
 ---
 
 ## What ArkOS gives you
 
-- **AGENTS.md** — a single source of truth for all agentic IDEs (Copilot, Cursor, Codex, Windsurf, Claude Code)
-- **A project constitution** — five non-negotiable principles that survive across sessions and agents
-- **EARS-based specs** — testable, traceable requirements before any agent touches a file
-- **Nygard ADRs** — architectural decisions that are immutable and auditable
-- **Five governance gates** — Research, Plan, Build, Ship, Run — enforced by CI
-- **Compliance baselines** — OWASP ASVS v5 L1, Essential Eight ML1, APP 1/5/11, WCAG 2.2 AA
-- **A Proof Sheet** — a fillable procurement evidence document generated from the repo
-
----
-
-## Quickstart
-
-**Time required: under 15 minutes.**
-
-1. Click **"Use this template"** on GitHub to create a new repository from ArkOS.
-
-2. Clone your new repository.
-
-3. Open `.arkos/constitution.md` and read it. It is the project non-negotiables. Edit the process rules if your team differs.
-
-4. Open `AGENTS.md` and replace the placeholder stack section with your actual runtime, framework, language, package manager, and test commands.
-
-5. Configure your IDE adapter:
-   - **Claude Code:** `CLAUDE.md` is already wired. Open it to review the Claude-specific notes.
-   - **GitHub Copilot:** `.github/copilot-instructions.md` is already wired. No changes needed.
-   - **Cursor:** `.cursor/rules/arkos.mdc` is already wired. No changes needed.
-   - **Other AGENTS.md-native IDEs (Codex, Windsurf, Amp):** `AGENTS.md` works natively. No adapter needed.
-
-6. Replace the placeholder steps in `.github/workflows/arkos.yml` with your stack's actual lint, typecheck, test, and SBOM commands.
-
-7. Write your first spec in `.arkos/specs/` using the template at `.arkos/specs/_template.md`. Name it `0001-<feature-slug>.md`.
-
-8. Make your first commit. Reference the spec: `feat: initialise project (SPEC-0001)`.
-
-9. Push. CI runs all five gates.
-
-See `QUICKSTART.md` for a detailed walkthrough.
-
----
-
-## IDE adapters
-
-| IDE | Status | File |
+| What | File | Purpose |
 |---|---|---|
-| GitHub Copilot | Wired | `.github/copilot-instructions.md` |
-| Cursor | Wired | `.cursor/rules/arkos.mdc` |
-| Claude Code | Wired | `CLAUDE.md` |
-| Codex, Windsurf, Amp | Native | `AGENTS.md` (no adapter needed) |
+| Agent instructions | `AGENTS.md` | Single source of truth for every agentic IDE |
+| IDE adapters | `CLAUDE.md`, `.cursor/rules/arkos.mdc`, `.github/copilot-instructions.md` | Thin pointers to `AGENTS.md`; no duplicated content |
+| Project constitution | `.arkos/constitution.md` | Five non-negotiable principles that survive across sessions and agents |
+| Spec template | `.arkos/specs/_template.md` | EARS-based requirements before any agent touches a file |
+| ADR template | `.arkos/adr/_template.md` | Nygard-format architectural decisions; immutable once accepted |
+| Threat model template | `.arkos/threat-models/_template.md` | STRIDE-lite, one per trust-boundary feature |
+| Runbook template | `.arkos/runbooks/_template.md` | On-call runbook covering health, alerts, and rollback |
+| Gate definitions | `.arkos/gates/` | Machine-readable pass/fail criteria for all five gates |
+| CI workflow | `.github/workflows/arkos.yml` | Governance gates enforced on every PR and push to main |
+| Proof Sheet | `.arkos/proof-sheet.md` | Fillable procurement evidence document |
+
+---
+
+## Compliance baselines (v1)
+
+| Domain | Standard |
+|---|---|
+| Application security | OWASP ASVS v5.0.0 Level 1 |
+| Cyber hygiene | ASD Essential Eight ML1 |
+| Privacy | Privacy Act 1988 (Cth) — APP 1, 5, 11 |
+| Accessibility | WCAG 2.2 AA (ISO/IEC 40500:2025) |
+| Supply chain | CycloneDX SBOM 1.6+ |
+
+See `docs/standards.md` for versions, rationale, and source links.
+
+---
+
+## IDE support
+
+ArkOS works with any IDE that reads `AGENTS.md` natively. No configuration required for those IDEs. Thin adapter files are included for IDEs that need a pointer.
+
+| IDE | Works how |
+|---|---|
+| GitHub Copilot | `.github/copilot-instructions.md` points to `AGENTS.md` |
+| Cursor | `.cursor/rules/arkos.mdc` points to `AGENTS.md` |
+| Claude Code | `CLAUDE.md` imports `AGENTS.md` via `@AGENTS.md` |
+| Codex, Windsurf, Amp, Gemini CLI | Read `AGENTS.md` natively; no adapter needed |
+
+---
+
+## Tech stack support
+
+ArkOS is stack-agnostic. The base template contains no stack-specific code, commands, or dependencies. You wire your own install, lint, typecheck, test, and SBOM commands into the CI workflow after adopting the template.
 
 ---
 
 ## The five governance gates
 
-| Gate | Question | Enforced by |
-|---|---|---|
-| Research | Are we solving the right problem? | Spec review |
-| Plan | Is the design coherent and contracted? | CI + spec review |
-| Build | Is what we built correct, safe and accessible? | CI (automated) |
-| Ship | Is this safe to release and traceable? | CI on main branch |
-| Run | Can we operate this without surprise? | Runbook + proof sheet |
+These gates are the core of ArkOS. Each gate has a named question, machine-readable criteria in `.arkos/gates/`, and CI enforcement where automation is possible.
 
-Gate criteria are defined in `.arkos/gates/`.
+| Gate | Question | Runs on |
+|---|---|---|
+| Research | Are we solving the right problem? | Spec review (not automated) |
+| Plan | Is the design coherent and contracted? | Every PR and push to main |
+| Build | Is what we built correct, safe and accessible? | Every PR and push to main |
+| Ship | Is this safe to release and traceable? | Pushes to main only |
+| Run | Can we operate this without surprise? | Human checklist in `proof-sheet.md` |
+
+### What the CI workflow automates
+
+The workflow runs four jobs. Two run on every PR and push; two run on pushes to main only.
+
+**Every PR and push to main:**
+- `plan-gate` — checks that the PR title, body, or latest commit references a spec (`SPEC-[0-9]+`)
+- `build-gate` — runs install, lint, typecheck, unit tests, integration tests, accessibility tests, contract tests, and the banned-pattern check
+
+**Pushes to main only:**
+- `ship-gate` — generates a CycloneDX SBOM, verifies `CHANGELOG.md` was updated, runs SAST, runs dependency vulnerability scanning
+- `run-readiness` — prints the human sign-off checklist; does not block the merge
+
+### What the CI workflow does not automate
+
+- Deployment. This is intentional. Add a separate `.github/workflows/deploy.yml` for your hosting target.
+- The Research gate. Problem statements and prior art are reviewed by a human reading the spec.
+- The Run gate in full. SLOs, runbooks, and on-call rotation require human sign-off in `proof-sheet.md`.
+
+---
+
+## Quickstart (15 minutes)
+
+See `QUICKSTART.md` for the full step-by-step guide. Summary:
+
+1. Click **"Use this template"** on GitHub.
+2. Clone your new repo.
+3. Edit `AGENTS.md` — replace placeholder stack, commands, and banned patterns.
+4. Edit `.arkos/constitution.md` — confirm or adjust the process rules.
+5. Edit `.github/workflows/arkos.yml` — replace placeholder build steps with your stack's commands.
+6. Write your first spec in `.arkos/specs/0001-<slug>.md`.
+7. Commit with a spec reference: `feat: initialise project (SPEC-0001)`.
+8. Push. CI runs the plan gate and build gate immediately.
+
+---
+
+## What to configure after adopting the template
+
+The following steps in the CI workflow are placeholders. Replace them before relying on the ship gate:
+
+| Step | What to replace it with |
+|---|---|
+| Install dependencies | Your stack's install command |
+| Lint, Typecheck, Tests | Your stack's commands |
+| Generate SBOM | `cyclonedx-npm`, `cyclonedx-py`, or equivalent for your stack |
+| SAST | CodeQL (with init step + language) or Semgrep |
+| Dependency scan | Trivy or OSV-Scanner |
+
+The banned-pattern checks in `.arkos/scripts/check-banned-patterns.sh` include two JavaScript/TypeScript-specific examples. Replace or remove them for your stack.
 
 ---
 
 ## Framework documentation
 
-- `docs/framework.md` — the ArkOS v0.1 framework document
-- `docs/standards.md` — the standards ArkOS binds to, with versions and rationale
 - `QUICKSTART.md` — step-by-step onboarding guide
-- `CONTRIBUTING.md` — how to contribute to ArkOS itself
+- `docs/framework.md` — the ArkOS v0.1 framework document
+- `docs/standards.md` — standards reference with versions and rationale
+- `docs/adr/` — framework-level architectural decisions
+- `CONTRIBUTING.md` — how to propose changes to ArkOS itself
 
 ---
 
