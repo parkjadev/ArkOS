@@ -41,6 +41,8 @@ The result was the agent editing files on a merged branch without a spec, which 
 
 > REQ-005: The pre-flight checks table shall include an explicit check: "Are you on a feature branch (not `main` or a previously merged branch)?" with a clear failure action.
 
+> REQ-006: The "Starting a new feature" workflow shall instruct the agent to create a GitHub issue before creating the feature branch, consistent with the constitution rule "Issue before branch."
+
 ## Acceptance criteria
 
 | Req | Test | Type |
@@ -50,6 +52,7 @@ The result was the agent editing files on a merged branch without a spec, which 
 | REQ-003 | Branch creation step appears before "Then implement" in the new-feature workflow | manual |
 | REQ-004 | Pushback script for "just fix it" / "just update the docs" exists in AGENTS.md | manual |
 | REQ-005 | Pre-flight table includes a branch check row | manual |
+| REQ-006 | New-feature workflow includes a GitHub issue creation step before branch creation | manual |
 
 ## Privacy notes
 

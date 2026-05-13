@@ -10,7 +10,7 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ### Changed
 
-- `AGENTS.md` restructured with a hard-stop block at the top, explicit branch check in the pre-flight table, branch creation moved before file editing in the new-feature workflow, pushback script for "just fix it" requests, and explicit instruction to pause after research findings before implementing (SPEC-0002)
+- `AGENTS.md` restructured with a hard-stop block at the top, explicit branch check in the pre-flight table, GitHub issue creation step before branch creation, branch creation moved before file editing in the new-feature workflow, pushback script for "just fix it" requests, and explicit instruction to pause after research findings before implementing (SPEC-0002)
 
 ### Added
 
@@ -19,6 +19,10 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 ### Fixed
 
 - `check-banned-patterns.sh` bare-TODO check now excludes `.md`, `.sh`, `.yml`, and `.yaml` files via a configurable `TODO_EXCLUDED_REGEX`, preventing false positives when documentation or tooling files describe the TODO pattern in prose or enforce it in code
+
+---
+
+## [0.1.0] - 2026-05-13
 
 ### Added
 
@@ -31,32 +35,6 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 - New gate criterion CRT-004 (spec reference in PR) on the plan gate; CRT-017 (CHANGELOG updated) on the build gate
 - `QUICKSTART.md` "What is not in this workflow" section making the deployment boundary explicit
 - Top-of-file comment in `arkos.yml` explaining the governance-only / no-deployment posture
-
-### Changed
-
-- `AGENTS.md` repositioned as an active-enforcer instruction set, not a passive reference
-- IDE adapters (`CLAUDE.md`, `.cursor/rules/arkos.mdc`, `.github/copilot-instructions.md`) reinforce the active-enforcer framing
-- `check-changelog.sh` moved from `ship-gate` to `build-gate` so PRs enforce CHANGELOG updates pre-merge instead of post-merge
-- Banned-pattern checks on `console.log` and `: any` scoped to `.js/.jsx/.ts/.tsx/.mjs/.cjs` source files only
-- SAST and dependency scan workflow steps converted to commented placeholders (CodeQL requires an init step; users now have explicit guidance)
-- `proof-sheet.md` evidence column annotated "after wiring" for placeholder CI steps
-- `.arkos/arkos.yml` `created` field is now a `<YYYY-MM-DD>` placeholder rather than the hard-coded build date
-- `CHANGELOG.md` 0.1.0 link converted to `<your-org>/<your-repo>` placeholder
-- PR template banned-pattern checklist item now references `AGENTS.md` instead of hardcoding JS-specific patterns
-- `QUICKSTART.md` first-commit budget reconciled from 15 minutes to 30 to 60 minutes; full CI wiring stated as "an afternoon"
-- `QUICKSTART.md` first-commit flow switched from `push origin main` to feature branch + pull request, consistent with branch-protected repositories
-- Em dashes removed from all files except `docs/framework.md` (preserved verbatim per REQ-049)
-
-### Fixed
-
-- YAML parse failure in `arkos.yml` workflow caused by inline comments between step keys and by unquoted colons in placeholder echo strings
-- `check-banned-patterns.sh` silently passing in CI because it scanned the (always-empty) staging area instead of the diff
-- `check-changelog.sh` crashing on the first commit of a fresh repository (no `HEAD~1`)
-- `check-spec-link.sh` missing merge commits where the spec reference appears in an earlier commit on the branch
-- `proof-sheet.md` referencing a non-existent `.arkos/proof-essential-eight.md` file
-
-### Added
-
 - `AGENTS.md` - portable agent instruction file, single source of truth for all agentic IDEs
 - `CLAUDE.md` - Claude Code adapter with @import pointer to AGENTS.md
 - `.cursor/rules/arkos.mdc` - Cursor adapter pointing to AGENTS.md
@@ -91,6 +69,29 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 - `CONTRIBUTING.md` - contribution guidelines
 - `SECURITY.md` - coordinated disclosure policy
 - `LICENSE` - Apache 2.0
+
+### Changed
+
+- `AGENTS.md` repositioned as an active-enforcer instruction set, not a passive reference
+- IDE adapters (`CLAUDE.md`, `.cursor/rules/arkos.mdc`, `.github/copilot-instructions.md`) reinforce the active-enforcer framing
+- `check-changelog.sh` moved from `ship-gate` to `build-gate` so PRs enforce CHANGELOG updates pre-merge instead of post-merge
+- Banned-pattern checks on `console.log` and `: any` scoped to `.js/.jsx/.ts/.tsx/.mjs/.cjs` source files only
+- SAST and dependency scan workflow steps converted to commented placeholders (CodeQL requires an init step; users now have explicit guidance)
+- `proof-sheet.md` evidence column annotated "after wiring" for placeholder CI steps
+- `.arkos/arkos.yml` `created` field is now a `<YYYY-MM-DD>` placeholder rather than the hard-coded build date
+- `CHANGELOG.md` 0.1.0 link converted to `<your-org>/<your-repo>` placeholder
+- PR template banned-pattern checklist item now references `AGENTS.md` instead of hardcoding JS-specific patterns
+- `QUICKSTART.md` first-commit budget reconciled from 15 minutes to 30 to 60 minutes; full CI wiring stated as "an afternoon"
+- `QUICKSTART.md` first-commit flow switched from `push origin main` to feature branch + pull request, consistent with branch-protected repositories
+- Em dashes removed from all files except `docs/framework.md` (preserved verbatim per REQ-049)
+
+### Fixed
+
+- YAML parse failure in `arkos.yml` workflow caused by inline comments between step keys and by unquoted colons in placeholder echo strings
+- `check-banned-patterns.sh` silently passing in CI because it scanned the (always-empty) staging area instead of the diff
+- `check-changelog.sh` crashing on the first commit of a fresh repository (no `HEAD~1`)
+- `check-spec-link.sh` missing merge commits where the spec reference appears in an earlier commit on the branch
+- `proof-sheet.md` referencing a non-existent `.arkos/proof-essential-eight.md` file
 
 ---
 

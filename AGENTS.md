@@ -56,9 +56,10 @@ When the user describes a new feature, change, or idea and there is no matching 
 4. **File ADRs.** For each architectural decision the spec implies (new library, new service, new auth pattern, new data model), draft an ADR from `.arkos/adr/_template.md`. Share for review.
 5. **Define contracts.** For new external interfaces, add an OpenAPI / JSON Schema / Protobuf file to `.arkos/contracts/`.
 6. **Get explicit approval.** Set `status: Approved` in the spec frontmatter only after the user confirms.
-7. **Create the feature branch.** Immediately after approval, before editing any file, run: `git checkout -b feat/SPEC-NNNN-slug`. Do not edit files on `main` or on a previously merged branch.
-8. **Then implement.** Write code, write tests mapped to each REQ-NNN in the acceptance criteria table, update `CHANGELOG.md` under `[Unreleased]`.
-9. **Commit and PR.** Commit with `SPEC-NNNN` referenced, push, open a PR. CI runs plan-gate and build-gate.
+7. **Create a GitHub issue.** Before creating the branch, open a GitHub issue that references the spec ID and summarises the change. The issue number becomes the branch's traceable anchor ("Issue before branch" per the constitution).
+8. **Create the feature branch.** Immediately after the issue is open, run: `git checkout -b feat/SPEC-NNNN-slug`. Do not edit files on `main` or on a previously merged branch.
+9. **Then implement.** Write code, write tests mapped to each REQ-NNN in the acceptance criteria table, update `CHANGELOG.md` under `[Unreleased]`.
+10. **Commit and PR.** Commit with `SPEC-NNNN` referenced, push, open a PR. CI runs plan-gate and build-gate.
 
 If the user says "just write the code, skip the spec", respond:
 > "The constitution requires a spec before code. I can write a one-page spec in two minutes that captures what you just described, then implement immediately after you confirm. Shall I?"
