@@ -7,7 +7,9 @@
 #   In CI (first commit, no HEAD~1): checks every tracked file.
 #   Locally: checks staged files only (pre-commit use).
 #
-# The bare-TODO check runs on text files of any extension.
+# The bare-TODO check runs on non-markdown source and config files.
+# Markdown files (.md) are excluded because documentation legitimately
+# describes the TODO pattern without meaning to introduce it as a marker.
 # The console.log and ': any' checks are JavaScript/TypeScript examples and
 # only run on source files matching SOURCE_EXTENSIONS_REGEX below. This avoids
 # false positives in markdown and YAML (e.g. prose containing "to: any user").
@@ -58,10 +60,13 @@ while IFS= read -r file; do
 
   # Universal check: bare TODO without an issue reference.
   # Allowed format: TODO(#123): description
-  if grep -nP "TODO(?!\(#[0-9]+\))" "$file" >/dev/null 2>&1; then
-    grep -nP "TODO(?!\(#[0-9]+\))" "$file"
-    echo "ERROR: Bare TODO in $file. Use TODO(#<issue-number>) format."
-    FAILED=true
+  # Skipped for markdown files where "TODO" appears legitimately in documentation.
+  if ! echo "$file" | grep -qE '\.md$'; then
+    if grep -nP "TODO(?!\(#[0-9]+\))" "$file" >/dev/null 2>&1; then
+      grep -nP "TODO(?!\(#[0-9]+\))" "$file"
+      echo "ERROR: Bare TODO in $file. Use TODO(#<issue-number>) format."
+      FAILED=true
+    fi
   fi
 
   # Stack-specific checks: only run on source files matching SOURCE_EXTENSIONS_REGEX.
