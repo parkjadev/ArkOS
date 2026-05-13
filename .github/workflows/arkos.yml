@@ -1,5 +1,24 @@
 name: arkos
 
+# ArkOS CI workflow — governance gates only.
+#
+# This workflow enforces the five ArkOS governance gates (Research, Plan, Build,
+# Ship, Run). It does NOT deploy anything.
+#
+# Deployment is intentionally excluded from this template. It is hosting-specific
+# (Vercel, AWS, GCP, fly.io, Docker, bare metal) and environment-specific (staging
+# vs production promotion rules vary per team). Add your deployment workflow in a
+# separate file, for example .github/workflows/deploy.yml, after adopting this
+# template.
+#
+# What this workflow does:
+#   plan-gate     — verifies every PR references an approved spec
+#   build-gate    — runs lint, typecheck, tests, accessibility, and banned-pattern checks
+#   ship-gate     — generates SBOM, verifies CHANGELOG, runs SAST and dependency scan
+#   run-readiness — prints the human sign-off checklist required before production promotion
+#
+# Nothing in this file pushes, publishes, or releases to any environment.
+
 on:
   pull_request:
   push:
@@ -79,6 +98,8 @@ jobs:
         run: bash .arkos/scripts/check-banned-patterns.sh
 
   ship-gate:
+    # Ship gate: collects release evidence. Does NOT deploy.
+    # Add deployment steps in a separate workflow file.
     name: Ship gate - release safety and traceability
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
