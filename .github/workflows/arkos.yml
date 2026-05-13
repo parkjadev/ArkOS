@@ -28,39 +28,52 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        # Replace this step with your stack's install command.
-        # Example for Node.js: run: pnpm install --frozen-lockfile
-        run: echo "REPLACE: install dependencies for your stack"
+        run: |
+          # Replace with your stack's install command.
+          # Example (Node.js): pnpm install --frozen-lockfile
+          # Example (Python):  pip install -r requirements.txt
+          echo "REPLACE: add your install command above and remove this line"
 
       - name: Lint
-        # Replace with your stack's lint command.
-        # Example: run: pnpm lint
-        run: echo "REPLACE: run linter for your stack"
+        run: |
+          # Replace with your stack's lint command.
+          # Example (Node.js): pnpm lint
+          # Example (Python):  ruff check .
+          echo "REPLACE: add your lint command above and remove this line"
 
       - name: Typecheck
-        # Replace with your stack's typecheck command.
-        # Example: run: pnpm typecheck
-        run: echo "REPLACE: run typechecker for your stack"
+        run: |
+          # Replace with your stack's typecheck command.
+          # Example (Node.js): pnpm typecheck
+          # Example (Python):  mypy .
+          echo "REPLACE: add your typecheck command above and remove this line"
 
       - name: Unit tests
-        # Replace with your stack's unit test command.
-        # Example: run: pnpm test:unit
-        run: echo "REPLACE: run unit tests for your stack"
+        run: |
+          # Replace with your stack's unit test command.
+          # Example (Node.js): pnpm test:unit
+          # Example (Python):  pytest tests/unit
+          echo "REPLACE: add your unit test command above and remove this line"
 
       - name: Integration tests
-        # Replace with your stack's integration test command.
-        # Example: run: pnpm test:integration
-        run: echo "REPLACE: run integration tests for your stack"
+        run: |
+          # Replace with your stack's integration test command.
+          # Example (Node.js): pnpm test:integration
+          # Example (Python):  pytest tests/integration
+          echo "REPLACE: add your integration test command above and remove this line"
 
       - name: Accessibility tests (WCAG 2.2 AA)
-        # Replace with your stack's accessibility test command.
-        # Example: run: pnpm test:a11y
-        run: echo "REPLACE: run accessibility tests for your stack"
+        run: |
+          # Replace with your stack's accessibility test command.
+          # Example (Node.js): pnpm test:a11y
+          # Example (static):  pa11y-ci
+          echo "REPLACE: add your accessibility test command above and remove this line"
 
       - name: Contract tests
-        # Replace with your stack's contract test command.
-        # Example: run: pnpm test:contracts
-        run: echo "REPLACE: run contract tests for your stack"
+        run: |
+          # Replace with your stack's contract test command.
+          # Example (Node.js): pnpm test:contracts
+          echo "REPLACE: add your contract test command above and remove this line"
 
       - name: Banned pattern check
         run: bash .arkos/scripts/check-banned-patterns.sh
@@ -76,9 +89,11 @@ jobs:
           fetch-depth: 2
 
       - name: Generate SBOM (CycloneDX)
-        # Replace with your stack's SBOM generation command.
-        # Example for Node.js: run: pnpm exec cyclonedx-npm --output-file sbom.cdx.json
-        run: echo "REPLACE: generate CycloneDX SBOM for your stack"
+        run: |
+          # Replace with your stack's CycloneDX SBOM command.
+          # Example (Node.js): pnpm exec cyclonedx-npm --output-file sbom.cdx.json
+          # Example (Python):  cyclonedx-py --output sbom.cdx.json
+          echo "REPLACE: add your SBOM generation command above and remove this line"
 
       - name: Upload SBOM artefact
         uses: actions/upload-artifact@v4
@@ -100,7 +115,7 @@ jobs:
           severity: CRITICAL,HIGH
 
   run-readiness:
-    name: Run readiness — operational checklist
+    name: Run readiness - operational checklist
     runs-on: ubuntu-latest
     needs: build-gate
     if: github.ref == 'refs/heads/main'
