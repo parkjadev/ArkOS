@@ -349,7 +349,7 @@ The complete evidence trail is in the repository.
 | Domain | Standard | Level | Evidence |
 |---|---|---|---|
 | Application security | OWASP ASVS v5.0.0 | Level 1 | `.arkos/specs/`, SAST report in CI |
-| Cyber hygiene | ASD Essential Eight | ML1 | Attestation in `.arkos/proof-essential-eight.md` |
+| Cyber hygiene | ASD Essential Eight | ML1 | Attestation in `.arkos/proof-sheet.md` |
 | Privacy | Privacy Act 1988 (Cth), APP 1, 5, 11 | Compliant for scope | Privacy notes in each spec |
 | Accessibility | WCAG 2.2 AA (ISO/IEC 40500:2025) | Compliant | axe-core CI; manual audit report |
 | Supply chain | CycloneDX SBOM | 1.6+ | `sbom.cdx.json` per release |

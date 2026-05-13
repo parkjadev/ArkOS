@@ -20,6 +20,7 @@ It is a files-and-conventions framework. No runtime. No inference proxy. No vend
 | ADR template | `.arkos/adr/_template.md` | Nygard-format architectural decisions; immutable once accepted |
 | Threat model template | `.arkos/threat-models/_template.md` | STRIDE-lite, one per trust-boundary feature |
 | Runbook template | `.arkos/runbooks/_template.md` | On-call runbook covering health, alerts, and rollback |
+| Contract template | `.arkos/contracts/_template.md` | OpenAPI / JSON Schema / Protobuf stub; one per external interface |
 | Gate definitions | `.arkos/gates/` | Machine-readable pass/fail criteria for all five gates |
 | CI workflow | `.github/workflows/arkos.yml` | Governance gates enforced on every PR and push to main |
 | Proof Sheet | `.arkos/proof-sheet.md` | Fillable procurement evidence document |
@@ -100,7 +101,7 @@ First governed commit: 30 to 60 minutes. Full CI wiring for a real stack: an aft
 3. **Enable branch protection on `main`** with required status checks `plan-gate` and `build-gate`. Without this, every gate is opt-in.
 4. Read `.arkos/constitution.md`. Confirm or adjust the process rules.
 5. Edit `AGENTS.md` - replace placeholder stack, commands, and banned patterns.
-6. Edit `.arkos/arkos.yml` - set `project` and `created` date.
+6. Edit `.arkos/arkos.yml` - set `project` name and `created` date (today, YYYY-MM-DD format).
 7. Edit `.github/workflows/arkos.yml` - replace placeholder build steps with your stack's commands.
 8. Write your first spec in `.arkos/specs/0001-<slug>.md`.
 9. Create a feature branch, commit with a spec reference (`SPEC-0001`), and open a PR.

@@ -10,14 +10,20 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ### Changed
 
+- `AGENTS.md` "When committing or opening a PR" checklist now requires `Closes #N` in the PR body so GitHub issues auto-close on merge (SPEC-0003)
 - `AGENTS.md` restructured with a hard-stop block at the top, explicit branch check in the pre-flight table, GitHub issue creation step before branch creation, branch creation moved before file editing in the new-feature workflow, pushback script for "just fix it" requests, and explicit instruction to pause after research findings before implementing (SPEC-0002)
+- `README.md` quickstart step 6 and `QUICKSTART.md` Step 4 now specify YYYY-MM-DD format for the `created` field in `arkos.yml` (SPEC-0003)
 
 ### Added
 
+- `.arkos/contracts/_template.md` - minimal contract stub for OpenAPI / JSON Schema / Protobuf; satisfies the AGENTS.md pre-flight check for new external interfaces (SPEC-0003)
+- `.arkos/specs/0003-documentation-accuracy.md` - spec covering documentation fixes and contracts template
 - `.arkos/specs/0002-agents-md-hardening.md` - spec covering the AGENTS.md governance bypass hardening
+- `README.md` "What ArkOS gives you" table now includes the contracts template row (SPEC-0003)
 
 ### Fixed
 
+- `docs/framework.md` conformance summary referenced non-existent `.arkos/proof-essential-eight.md`; corrected to `.arkos/proof-sheet.md` (SPEC-0003)
 - `check-banned-patterns.sh` bare-TODO check now excludes `.md`, `.sh`, `.yml`, and `.yaml` files via a configurable `TODO_EXCLUDED_REGEX`, preventing false positives when documentation or tooling files describe the TODO pattern in prose or enforce it in code
 
 ---

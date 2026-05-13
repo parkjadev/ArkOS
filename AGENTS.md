@@ -81,6 +81,7 @@ Before producing a commit message or PR description, confirm:
 - No banned patterns appear in the changed files.
 - Tests covering each new REQ have been added.
 - For UI changes, accessibility (WCAG 2.2 AA) has been considered.
+- The PR body includes `Closes #N` referencing the GitHub issue opened in step 7, so it auto-closes on merge.
 
 If any of these is missing, fix it before pushing. Do not push and hope CI passes.
 
