@@ -1,4 +1,4 @@
-# ArkOS Proof Sheet — <Project Name>
+# ArkOS Proof Sheet - <Project Name>
 
 This codebase was built under **ArkOS v0.1** governance.
 The complete evidence trail is in the repository.
@@ -11,11 +11,11 @@ Fill in the `<placeholder>` fields before presenting this document to a procurem
 
 | Domain | Standard | Level | Evidence |
 |---|---|---|---|
-| Application security | OWASP ASVS v5.0.0 | Level 1 | `.arkos/specs/`, SAST report in CI |
-| Cyber hygiene | ASD Essential Eight | ML1 | Attestation in `.arkos/proof-essential-eight.md` |
-| Privacy | Privacy Act 1988 (Cth), APP 1, 5, 11 | Compliant for scope | Privacy notes in each spec |
-| Accessibility | WCAG 2.2 AA (ISO/IEC 40500:2025) | Compliant | axe-core CI report; manual audit report |
-| Supply chain | CycloneDX SBOM 1.6+ | Current | `sbom.cdx.json` per release, attached as CI artefact |
+| Application security | OWASP ASVS v5.0.0 | Level 1 | `.arkos/specs/` (privacy and trust-boundary notes); SAST report in CI (after SAST step is wired in `arkos.yml`) |
+| Cyber hygiene | ASD Essential Eight | ML1 | Repository-level controls in `arkos.yml`, `constitution.md`, and CI workflow; complete operational controls outside the repository scope |
+| Privacy | Privacy Act 1988 (Cth), APP 1, 5, 11 | Compliant for scope | Privacy notes in each spec touching personal data |
+| Accessibility | WCAG 2.2 AA (ISO/IEC 40500:2025) | Compliant | Accessibility test report in CI (after a11y step is wired); manual audit report for non-automatable criteria |
+| Supply chain | CycloneDX SBOM 1.6+ | Current | `sbom.cdx.json` per release, attached as CI artefact (after SBOM step is wired) |
 | Change management | Conventional Commits 1.0 + Keep a Changelog 1.1 | Mandatory | `CHANGELOG.md`, `.arkos/adr/` |
 
 ---

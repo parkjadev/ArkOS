@@ -1,14 +1,10 @@
 gate: ship
 question: "Is this safe to release and traceable?"
 criteria:
-  - id: CRT-017
-    description: CHANGELOG updated
-    evidence: CHANGELOG.md appears in the diff for this release
-    automated: true
   - id: CRT-018
     description: Version bumped per SemVer
     evidence: Version field in project manifest has been incremented
-    automated: true
+    automated: false
   - id: CRT-019
     description: SBOM produced
     evidence: sbom.cdx.json artefact uploaded to CI workflow run

@@ -27,5 +27,5 @@ ide-adapters:
   github-copilot: true   # .github/copilot-instructions.md present
   cursor: true           # .cursor/rules/arkos.mdc present
 
-# Date this repository was initialised with ArkOS.
-created: "2026-05-13"
+# Date this repository was initialised with ArkOS. Replace with today's date (YYYY-MM-DD) before your first commit.
+created: "<YYYY-MM-DD>"

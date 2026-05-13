@@ -1,6 +1,6 @@
 # ArkOS Quickstart
 
-A developer with no prior ArkOS knowledge can follow this guide and make their first governed commit in under 15 minutes.
+A developer with no prior ArkOS knowledge can follow this guide and make their first governed commit in 30 to 60 minutes. Wiring CI commands for a full stack typically takes an afternoon. The 15-minute path is "click template, clone, commit the placeholders", useful for kicking the tyres but not for real work.
 
 ---
 
@@ -15,7 +15,7 @@ You do not need to install anything else before adopting the template. Stack-spe
 
 ---
 
-## Step 1 — Create your repository from the template
+## Step 1 - Create your repository from the template
 
 1. Go to the ArkOS template repository on GitHub.
 2. Click **"Use this template"** then **"Create a new repository"**.
@@ -32,7 +32,7 @@ Your repository now contains the full ArkOS file tree. Nothing is running yet. T
 
 ---
 
-## Step 2 — Read the constitution
+## Step 2 - Read the constitution
 
 Open `.arkos/constitution.md`. Read it in full before touching any other file.
 
@@ -43,11 +43,11 @@ It contains:
 
 ---
 
-## Step 3 — Personalise AGENTS.md
+## Step 3 - Personalise AGENTS.md
 
 Open `AGENTS.md`. This is the single source of truth for every AI coding agent that works in this repo. Replace every placeholder section before your first commit.
 
-**Project section:** Write one paragraph — what this project is, who uses it, why it exists.
+**Project section:** Write one paragraph - what this project is, who uses it, why it exists.
 
 **Tech stack section:** Replace each placeholder line with your actual stack:
 ```
@@ -61,11 +61,11 @@ Open `AGENTS.md`. This is the single source of truth for every AI coding agent t
 
 **Commands section:** Replace each `<placeholder>` with your actual commands:
 ```
-- `pnpm install` — install dependencies
-- `pnpm dev` — start local dev server
-- `pnpm verify` — lint, typecheck, and test
-- `pnpm sbom` — generate CycloneDX SBOM
-- `pnpm test:a11y` — accessibility checks in isolation
+- `pnpm install` - install dependencies
+- `pnpm dev` - start local dev server
+- `pnpm verify` - lint, typecheck, and test
+- `pnpm sbom` - generate CycloneDX SBOM
+- `pnpm test:a11y` - accessibility checks in isolation
 ```
 
 **Banned patterns section:** The template includes two JavaScript/TypeScript-specific examples (`console.log`, `: any`). Replace or remove these for your stack, and add any project-specific patterns.
@@ -74,13 +74,13 @@ Keep `AGENTS.md` under 150 lines. If your stack requires more detail, use nested
 
 ---
 
-## Step 4 — Configure your IDE adapter
+## Step 4 - Configure your IDE adapter
 
 Your IDE adapter is already wired. You only need to open and review it.
 
 **Claude Code**
 
-Open `CLAUDE.md`. It imports `AGENTS.md` via `@AGENTS.md` and adds five Claude-specific notes. Add or remove notes as needed. Do not copy content from `AGENTS.md` into `CLAUDE.md` — it is a pointer, not a copy.
+Open `CLAUDE.md`. It imports `AGENTS.md` via `@AGENTS.md` and adds five Claude-specific notes. Add or remove notes as needed. Do not copy content from `AGENTS.md` into `CLAUDE.md` - it is a pointer, not a copy.
 
 **GitHub Copilot**
 
@@ -96,7 +96,7 @@ Open `.cursor/rules/arkos.mdc`. No changes needed for basic use.
 
 ---
 
-## Step 5 — Wire your CI commands
+## Step 5 - Wire your CI commands
 
 Open `.github/workflows/arkos.yml`.
 
@@ -120,16 +120,16 @@ Search for lines containing `echo "REPLACE:` and replace them with your stack's 
 
 | Step | What to put here |
 |---|---|
-| Generate SBOM | Your CycloneDX command — see note below |
-| SAST | A static analysis tool — see note below |
-| Dependency scan | A vulnerability scanner — see note below |
+| Generate SBOM | Your CycloneDX command - see note below |
+| SAST | A static analysis tool - see note below |
+| Dependency scan | A vulnerability scanner - see note below |
 
 **SBOM generation:** Use the CycloneDX tool for your stack:
 - Node.js: `pnpm exec cyclonedx-npm --output-file sbom.cdx.json`
 - Python: `cyclonedx-py --output sbom.cdx.json`
 - Other stacks: see https://cyclonedx.org/tool-center/
 
-**SAST:** CodeQL is the recommended option for GitHub-hosted repos. It requires two steps — an `init` step (declaring your language) and then the `analyze` step. The comment in the workflow shows the exact syntax. For multi-language or non-GitHub-Advanced-Security repos, Semgrep is a good alternative.
+**SAST:** CodeQL is the recommended option for GitHub-hosted repos. It requires two steps - an `init` step (declaring your language) and then the `analyze` step. The comment in the workflow shows the exact syntax. For multi-language or non-GitHub-Advanced-Security repos, Semgrep is a good alternative.
 
 **Dependency scan:** Trivy and OSV-Scanner both work without tokens and cover most stacks. The comments in the workflow show the exact syntax for each.
 
@@ -139,7 +139,7 @@ Deployment is deliberately absent. Add a separate `.github/workflows/deploy.yml`
 
 ---
 
-## Step 6 — Write your first spec
+## Step 6 - Write your first spec
 
 Copy the spec template:
 
@@ -151,10 +151,10 @@ Open the new file and complete every section:
 
 1. Set `id: SPEC-0001` and `slug: <feature-slug>` in the frontmatter.
 2. Set `status: Draft` to start, then change to `Approved` when ready.
-3. Write `## Problem` — one paragraph, who benefits, why this exists.
-4. Write `## Out of scope` — at least three explicit exclusions.
+3. Write `## Problem` - one paragraph, who benefits, why this exists.
+4. Write `## Out of scope` - at least three explicit exclusions.
 5. Write requirements using EARS patterns. Include at least one `WHEN`, `IF`, `WHILE`, or `WHERE` pattern.
-6. Fill the acceptance criteria table — one row per requirement, linked to a test file and type.
+6. Fill the acceptance criteria table - one row per requirement, linked to a test file and type.
 7. If the feature touches personal data, complete the Privacy notes section (APP 1, 5, 11).
 8. If the feature has a UI, complete the Accessibility notes section (WCAG 2.2 AA).
 9. File an ADR in `.arkos/adr/` for any significant architectural decision the spec implies.
@@ -163,26 +163,31 @@ Set `status: Approved` before raising a PR.
 
 ---
 
-## Step 7 — Make your first commit
+## Step 7 - Make your first commit on a feature branch
 
-Stage your personalised files and commit using Conventional Commits format. The commit message must reference the spec.
+Create a feature branch, stage your personalised files, and commit using Conventional Commits format. The commit message must reference the spec.
 
 ```
-git add AGENTS.md .arkos/constitution.md .arkos/specs/0001-<feature-slug>.md
+git checkout -b feat/initialise
+git add AGENTS.md .arkos/constitution.md .arkos/arkos.yml .arkos/specs/0001-<feature-slug>.md
 git commit -m "feat: initialise project with ArkOS governance (SPEC-0001)"
 ```
 
 The plan gate checks that `SPEC-[0-9]+` appears in the commit message, PR title, or PR body. If it is missing, the gate fails with a clear error.
 
+Also update `CHANGELOG.md` with an entry for this change. The build gate checks that `CHANGELOG.md` is modified in the PR.
+
 ---
 
-## Step 8 — Push and watch CI
+## Step 8 - Push the branch and open a PR
 
 ```
-git push origin main
+git push -u origin feat/initialise
 ```
 
-Go to your repository's **Actions** tab on GitHub. You will see the `arkos` workflow running.
+Open a pull request from `feat/initialise` to `main` in GitHub. The PR template will prompt you through the checklist (spec reference, tests, CHANGELOG, banned patterns, accessibility, ADR).
+
+Go to your repository's **Actions** tab. You will see the `arkos` workflow running on the PR.
 
 ### Which jobs run when
 
@@ -211,7 +216,7 @@ The ship gate runs on pushes to `main`. Common failure reasons after you have re
 
 ---
 
-## Step 9 — Before production
+## Step 9 - Before production
 
 Before promoting any release to production, complete the run readiness checklist in `.arkos/proof-sheet.md`:
 
@@ -224,7 +229,7 @@ The `run-readiness` CI job prints this checklist as a reminder but does not bloc
 
 ---
 
-## Step 10 — For procurement
+## Step 10 - For procurement
 
 Fill in `.arkos/proof-sheet.md` with your project name, owner name, and review date. Share the completed file with the procurement reviewer alongside a link to the repository. The evidence trail (specs, ADRs, SBOM artefacts, SAST reports) is all in the repo.
 
@@ -234,15 +239,15 @@ Fill in `.arkos/proof-sheet.md` with your project name, owner name, and review d
 
 | File | Purpose |
 |---|---|
-| `AGENTS.md` | Agent instructions — edit this first |
+| `AGENTS.md` | Agent instructions - edit this first |
 | `.arkos/constitution.md` | Project non-negotiables |
-| `.arkos/specs/_template.md` | Spec template — copy for each feature |
-| `.arkos/adr/_template.md` | ADR template — copy for each decision |
-| `.arkos/threat-models/_template.md` | Threat model template — copy for trust-boundary features |
-| `.arkos/runbooks/_template.md` | Runbook template — copy for each service |
-| `.arkos/proof-sheet.md` | Procurement evidence — fill before first procurement review |
-| `.github/workflows/arkos.yml` | CI workflow — replace placeholder steps with real commands |
-| `.arkos/scripts/check-banned-patterns.sh` | Banned pattern script — replace stack-specific examples |
+| `.arkos/specs/_template.md` | Spec template - copy for each feature |
+| `.arkos/adr/_template.md` | ADR template - copy for each decision |
+| `.arkos/threat-models/_template.md` | Threat model template - copy for trust-boundary features |
+| `.arkos/runbooks/_template.md` | Runbook template - copy for each service |
+| `.arkos/proof-sheet.md` | Procurement evidence - fill before first procurement review |
+| `.github/workflows/arkos.yml` | CI workflow - replace placeholder steps with real commands |
+| `.arkos/scripts/check-banned-patterns.sh` | Banned pattern script - replace stack-specific examples |
 | `docs/framework.md` | Full ArkOS v0.1 framework document |
 | `docs/standards.md` | Standards reference with versions and links |
 | `CONTRIBUTING.md` | How to contribute to ArkOS itself |

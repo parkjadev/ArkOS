@@ -30,7 +30,7 @@ If no spec exists yet, create one in `.arkos/specs/` before proceeding.
 ## Linked ADRs
 
 <!-- List any architectural decisions that relate to this feature. -->
-<!-- Format: ADR-NNNN — title -->
+<!-- Format: ADR-NNNN - title -->
 
 - None
 

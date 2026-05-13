@@ -24,7 +24,7 @@ ArkOS v0.1 binds to these standards. Each entry lists the standard, its specific
 
 **Version:** Current (Mavin and Stephenson, 2010)
 **Rationale:** Five sentence patterns (Ubiquitous, Event-driven, State-driven, Optional, Unwanted) that produce independently testable requirements. Each pattern maps directly to a test case. Native in AWS Kiro IDE.
-**Source:** "Easy Approach to Requirements Syntax" — Mavin, Wilkinson, Tuffin and Rabel
+**Source:** "Easy Approach to Requirements Syntax" - Mavin, Wilkinson, Tuffin and Rabel
 
 ---
 
@@ -52,7 +52,7 @@ ArkOS v0.1 binds to these standards. Each entry lists the standard, its specific
 
 ---
 
-## Privacy: Privacy Act 1988 (Cth) — Australian Privacy Principles
+## Privacy: Privacy Act 1988 (Cth) - Australian Privacy Principles
 
 **Version:** APP 1, 5, 11
 **Rationale:** APP 1 (open and transparent management of personal information), APP 5 (notification of collection), APP 11 (security of personal information). The minimum obligations for any Australian software that handles personal data.

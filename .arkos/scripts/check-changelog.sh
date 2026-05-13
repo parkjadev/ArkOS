@@ -2,8 +2,9 @@
 # Verifies that CHANGELOG.md was updated in the current PR or push.
 #
 # Behaviour:
-#   In CI (pull request): checks whether CHANGELOG.md was modified vs the base branch.
-#   In CI (push to branch): checks whether CHANGELOG.md was modified vs the previous commit.
+#   In CI (pull request): checks CHANGELOG.md was modified vs the base branch.
+#   In CI (push to branch): checks CHANGELOG.md was modified vs the previous commit.
+#   In CI (first commit, no HEAD~1): requires CHANGELOG.md to exist and be non-empty.
 #   Locally: checks whether CHANGELOG.md is staged.
 
 set -euo pipefail
@@ -17,18 +18,15 @@ if [[ -n "${CI:-}" ]]; then
     if git diff --name-only "origin/${GITHUB_BASE_REF}...HEAD" 2>/dev/null | grep -q "^CHANGELOG\.md$"; then
       FOUND=true
     fi
+  elif git rev-parse HEAD~1 >/dev/null 2>&1; then
+    # Push to a branch: diff against the previous commit.
+    if git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -q "^CHANGELOG\.md$"; then
+      FOUND=true
+    fi
   else
-    # Push to branch: diff against the previous commit.
-    # Guard against the first commit in a repo (no HEAD~1).
-    if git rev-parse HEAD~1 >/dev/null 2>&1; then
-      if git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -q "^CHANGELOG\.md$"; then
-        FOUND=true
-      fi
-    else
-      # First commit: CHANGELOG.md must exist and be non-empty.
-      if [[ -s "CHANGELOG.md" ]]; then
-        FOUND=true
-      fi
+    # First commit: CHANGELOG.md must exist and be non-empty.
+    if [[ -s "CHANGELOG.md" ]]; then
+      FOUND=true
     fi
   fi
 else

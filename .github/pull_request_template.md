@@ -14,7 +14,7 @@ Spec: <!-- e.g. SPEC-0001 -->
 - [ ] This PR references a spec (`SPEC-[0-9]+` in title or body above)
 - [ ] Tests have been added or updated for all changed behaviour
 - [ ] `CHANGELOG.md` has been updated with an entry for this change
-- [ ] No banned patterns (`console.log`, `: any`, bare `TODO`) in changed files
+- [ ] No banned patterns in changed files (see `AGENTS.md` for the list)
 - [ ] Accessibility verified (WCAG 2.2 AA) for any UI-bearing changes
 - [ ] ADR filed if this PR introduces an architecturally significant decision
 

@@ -2,22 +2,24 @@
 # Checks committed/staged files for banned patterns.
 #
 # Behaviour:
-#   In CI (pull request): checks all files changed vs the base branch.
-#   In CI (push to branch): checks all files changed vs the previous commit.
+#   In CI (pull request): checks files changed vs the base branch.
+#   In CI (push to branch): checks files changed vs the previous commit.
+#   In CI (first commit, no HEAD~1): checks every tracked file.
 #   Locally: checks staged files only (pre-commit use).
 #
-# The bare-TODO check is universal. The console.log and ': any' checks are
-# examples for JavaScript/TypeScript projects. Replace or remove them for
-# your stack before your first commit.
+# The bare-TODO check runs on text files of any extension.
+# The console.log and ': any' checks are JavaScript/TypeScript examples and
+# only run on source files matching SOURCE_EXTENSIONS_REGEX below. This avoids
+# false positives in markdown and YAML (e.g. prose containing "to: any user").
+# Replace or remove these checks for your stack before your first commit.
 #
-# To add a stack-specific pattern, copy the block format below:
-#
-#   if grep -rn "your-pattern" "$file" 2>/dev/null; then
-#     echo "ERROR: description — $file"
-#     FAILED=true
-#   fi
+# To add a stack-specific pattern, copy a block inside the SOURCE_EXTENSIONS
+# guard below.
 
 set -euo pipefail
+
+# Source file extensions for the stack-specific checks. Edit for your stack.
+SOURCE_EXTENSIONS_REGEX='\.(js|jsx|ts|tsx|mjs|cjs)$'
 
 FAILED=false
 
@@ -29,11 +31,11 @@ if [[ -n "${CI:-}" ]]; then
     CHANGED_FILES=$(git diff --name-only --diff-filter=ACM "origin/${GITHUB_BASE_REF}...HEAD" 2>/dev/null || true)
   else
     # Push to branch: diff against the previous commit.
-    # Guard against the first commit in a repo (no HEAD~1).
     if git rev-parse HEAD~1 >/dev/null 2>&1; then
       CHANGED_FILES=$(git diff --name-only --diff-filter=ACM HEAD~1 HEAD 2>/dev/null || true)
     else
-      CHANGED_FILES=$(git diff --name-only --diff-filter=ACM HEAD 2>/dev/null || true)
+      # First commit in the repo: check every tracked file.
+      CHANGED_FILES=$(git ls-tree -r HEAD --name-only 2>/dev/null || true)
     fi
   fi
 else
@@ -54,27 +56,33 @@ while IFS= read -r file; do
     continue
   fi
 
-  # Universal: bare TODO without an issue reference.
+  # Universal check: bare TODO without an issue reference.
   # Allowed format: TODO(#123): description
-  if grep -nP "TODO(?!\(#[0-9]+\))" "$file" 2>/dev/null; then
-    echo "ERROR: Bare TODO found in $file (see line above). Use TODO(#<issue-number>) format."
+  if grep -nP "TODO(?!\(#[0-9]+\))" "$file" >/dev/null 2>&1; then
+    grep -nP "TODO(?!\(#[0-9]+\))" "$file"
+    echo "ERROR: Bare TODO in $file. Use TODO(#<issue-number>) format."
     FAILED=true
   fi
 
-  # Stack-specific example: unstructured debug output (JavaScript/TypeScript).
-  # Replace with the equivalent for your stack, or remove if not applicable.
-  # Python example: grep -n "^print(" "$file"
-  if grep -n "console\.log" "$file" 2>/dev/null; then
-    echo "ERROR: console.log found in $file (see line above). Use the project logger."
-    FAILED=true
-  fi
+  # Stack-specific checks: only run on source files matching SOURCE_EXTENSIONS_REGEX.
+  if echo "$file" | grep -qE "$SOURCE_EXTENSIONS_REGEX"; then
 
-  # Stack-specific example: untyped escape hatch (TypeScript).
-  # Replace with the equivalent for your stack, or remove if not applicable.
-  # Python example: grep -n ": Any" "$file"
-  if grep -n ": any" "$file" 2>/dev/null; then
-    echo "ERROR: ': any' type annotation found in $file (see line above). Use a typed alternative."
-    FAILED=true
+    # Example pattern: unstructured debug output (JavaScript/TypeScript).
+    # Replace with your stack's equivalent, or remove if not applicable.
+    if grep -n "console\.log" "$file" >/dev/null 2>&1; then
+      grep -n "console\.log" "$file"
+      echo "ERROR: console.log in $file. Use the project logger."
+      FAILED=true
+    fi
+
+    # Example pattern: untyped escape hatch (TypeScript).
+    # Replace with your stack's equivalent, or remove if not applicable.
+    if grep -nE "(^|[^a-zA-Z_]): any($|[^a-zA-Z_])" "$file" >/dev/null 2>&1; then
+      grep -nE "(^|[^a-zA-Z_]): any($|[^a-zA-Z_])" "$file"
+      echo "ERROR: ': any' type annotation in $file. Use a typed alternative."
+      FAILED=true
+    fi
+
   fi
 
 done <<< "$CHANGED_FILES"

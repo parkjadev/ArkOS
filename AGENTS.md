@@ -27,11 +27,11 @@ Replace every line above with your actual stack before your first commit.
 
 ## Commands
 
-- `<install-command>` — install dependencies
-- `<dev-command>` — start local dev server
-- `<verify-command>` — run lint, typecheck, unit tests, integration tests, and accessibility checks
-- `<sbom-command>` — generate CycloneDX SBOM
-- `<a11y-command>` — run accessibility checks (WCAG 2.2 AA) in isolation
+- `<install-command>` - install dependencies
+- `<dev-command>` - start local dev server
+- `<verify-command>` - run lint, typecheck, unit tests, integration tests, and accessibility checks
+- `<sbom-command>` - generate CycloneDX SBOM
+- `<a11y-command>` - run accessibility checks (WCAG 2.2 AA) in isolation
 
 Replace each `<placeholder>` with your actual command before your first commit.
 
@@ -45,6 +45,8 @@ Replace each `<placeholder>` with your actual command before your first commit.
 - No bare `TODO` comments. Format: `TODO(#<issue-number>): description`.
 
 Add stack-specific banned patterns here before your first commit.
+
+Some patterns above are enforced by CI via `.arkos/scripts/check-banned-patterns.sh` (the bare-TODO check is universal; the rest depend on file extensions). The remainder are reviewer-enforced.
 
 ## Context reading order
 

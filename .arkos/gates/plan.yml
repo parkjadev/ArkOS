@@ -2,22 +2,26 @@ gate: plan
 question: "Is the design coherent and contracted?"
 criteria:
   - id: CRT-004
-    description: Spec status is Approved
-    evidence: YAML frontmatter status field equals Approved
+    description: Spec is referenced in the PR
+    evidence: PR title, body, or a commit message contains a SPEC-[0-9]+ reference
     automated: true
   - id: CRT-005
+    description: Spec status is Approved
+    evidence: YAML frontmatter status field equals Approved
+    automated: false
+  - id: CRT-006
     description: EARS requirements present
     evidence: Spec contains at least one WHEN, IF, WHILE, or WHERE pattern
-    automated: true
-  - id: CRT-006
+    automated: false
+  - id: CRT-007
     description: Trace table maps every REQ to a test
     evidence: Acceptance criteria table covers all REQ-NNN identifiers
-    automated: true
-  - id: CRT-007
+    automated: false
+  - id: CRT-008
     description: ADRs filed for architectural decisions
     evidence: Spec references at least one file in .arkos/adr/
-    automated: true
-  - id: CRT-008
+    automated: false
+  - id: CRT-009
     description: Contracts defined at external boundaries
     evidence: .arkos/contracts/ contains at least one schema file per external interface
     automated: false

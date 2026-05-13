@@ -1,35 +1,35 @@
 gate: build
 question: "Is what we built correct, safe and accessible?"
 criteria:
-  - id: CRT-009
+  - id: CRT-010
     description: Lint clean
     evidence: Lint command exits 0
     automated: true
-  - id: CRT-010
+  - id: CRT-011
     description: Typecheck clean
     evidence: Typecheck command exits 0
     automated: true
-  - id: CRT-011
+  - id: CRT-012
     description: Unit tests pass
     evidence: Unit test report uploaded with no failures
     automated: true
-  - id: CRT-012
+  - id: CRT-013
     description: Integration tests pass
     evidence: Integration test report uploaded with no failures
     automated: true
-  - id: CRT-013
-    description: Accessibility passes WCAG 2.2 AA
-    evidence: Accessibility test suite reports zero WCAG 2.2 AA violations
-    automated: true
   - id: CRT-014
+    description: Accessibility passes WCAG 2.2 AA
+    evidence: Accessibility test suite reports zero violations
+    automated: true
+  - id: CRT-015
     description: Contracts honoured
     evidence: Contract tests exit 0
     automated: true
-  - id: CRT-015
+  - id: CRT-016
     description: No banned patterns
     evidence: check-banned-patterns.sh exits 0
     automated: true
-  - id: CRT-016
-    description: Spec ID referenced in PR
-    evidence: PR title or body contains SPEC-[0-9]+ pattern
+  - id: CRT-017
+    description: CHANGELOG updated
+    evidence: CHANGELOG.md appears in the diff for this PR or push
     automated: true

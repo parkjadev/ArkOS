@@ -1,6 +1,6 @@
 name: arkos
 
-# ArkOS CI workflow — governance gates only.
+# ArkOS CI workflow - governance gates only.
 #
 # This workflow enforces the five ArkOS governance gates (Research, Plan, Build,
 # Ship, Run). It does NOT deploy anything.
@@ -12,16 +12,16 @@ name: arkos
 # template.
 #
 # What this workflow does:
-#   plan-gate     — verifies every PR references an approved spec
-#   build-gate    — runs lint, typecheck, tests, accessibility, and banned-pattern checks
-#   ship-gate     — generates SBOM, verifies CHANGELOG, runs SAST and dependency scan
-#   run-readiness — prints the human sign-off checklist required before production promotion
+#   plan-gate     - verifies every PR references an approved spec
+#   build-gate    - runs lint, typecheck, tests, accessibility, and banned-pattern checks
+#   ship-gate     - generates SBOM, verifies CHANGELOG, runs SAST and dependency scan
+#   run-readiness - prints the human sign-off checklist required before production promotion
 #
 # When each job runs:
-#   plan-gate     — every PR and every push to main
-#   build-gate    — every PR and every push to main (requires plan-gate to pass)
-#   ship-gate     — pushes to main only (requires build-gate to pass)
-#   run-readiness — pushes to main only (requires build-gate to pass)
+#   plan-gate     - every PR and every push to main
+#   build-gate    - every PR and every push to main (requires plan-gate to pass)
+#   ship-gate     - pushes to main only (requires build-gate to pass)
+#   run-readiness - pushes to main only (requires build-gate to pass)
 #
 # Nothing in this file pushes, publishes, or releases to any environment.
 
@@ -30,6 +30,10 @@ on:
   push:
     branches: [main]
 
+# Least-privilege default. Individual jobs may extend as needed.
+permissions:
+  contents: read
+
 jobs:
   plan-gate:
     name: Plan gate - spec reference check
@@ -37,12 +41,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Check spec reference
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
         run: bash .arkos/scripts/check-spec-link.sh
 
   build-gate:
@@ -107,6 +112,11 @@ jobs:
           GITHUB_BASE_REF: ${{ github.base_ref }}
         run: bash .arkos/scripts/check-banned-patterns.sh
 
+      - name: CHANGELOG updated
+        env:
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+        run: bash .arkos/scripts/check-changelog.sh
+
   ship-gate:
     # Ship gate: collects release evidence. Does NOT deploy.
     # Add deployment steps in a separate workflow file.
@@ -133,11 +143,6 @@ jobs:
           name: sbom
           path: sbom.cdx.json
           if-no-files-found: warn
-
-      - name: Check CHANGELOG updated
-        env:
-          GITHUB_BASE_REF: ${{ github.base_ref }}
-        run: bash .arkos/scripts/check-changelog.sh
 
       - name: SAST - static analysis
         # Replace with a SAST tool appropriate for your stack.

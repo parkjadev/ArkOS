@@ -44,4 +44,4 @@ It does not cover projects built using ArkOS. Those projects are the responsibil
 
 ---
 
-*ArkOS is an open-source release from ARK360 — building intelligent enterprise systems to amplify human excellence.*
+*ArkOS is an open-source release from ARK360 - building intelligent enterprise systems to amplify human excellence.*
