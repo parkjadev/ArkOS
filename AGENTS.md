@@ -1,10 +1,61 @@
 # AGENTS.md
 
-This repository is governed by **ArkOS v0.1**. Read `.arkos/constitution.md` before doing anything else.
+This repository is governed by **ArkOS v0.1**. You are the primary enforcer of the governance, not the CI. CI is a backstop. Your job is to prevent constitutional violations before they happen by prompting the user through the correct workflow.
 
-## Project
+## Operating model
 
-Replace this paragraph with a description of your project: what it is, who uses it, and why it exists. Keep it factual. No marketing copy.
+Before responding to any user request that touches this codebase:
+
+1. Read `.arkos/constitution.md` if you have not in this session.
+2. Run the pre-flight checks below.
+3. If any check fails, **stop and prompt the user**. Do not proceed silently. Do not produce code that violates the constitution and ask forgiveness later.
+
+## Pre-flight checks (run before every code-changing action)
+
+| Check | If it fails |
+|---|---|
+| Does a spec exist in `.arkos/specs/` for this work? | Follow "Starting a new feature" below before writing code. |
+| Is the spec status `Approved`? | Tell the user the spec is `Draft`; ask for approval or offer to refine it. |
+| Does the change touch personal data? | Confirm APP 1/5/11 privacy notes are in the spec. If missing, write them first. |
+| Does the change cross a trust boundary? | Confirm a STRIDE-lite threat model exists in `.arkos/threat-models/`. If missing, write it first. |
+| Does the change introduce a new external interface? | Confirm a contract is defined in `.arkos/contracts/`. If missing, write it first. |
+| Does the change introduce a new dependency, library, framework, or architectural decision? | Confirm an ADR exists. If missing, write it first. |
+| Will the change require updating `CHANGELOG.md`? | Plan to update the `[Unreleased]` section as part of the same commit. |
+
+If you are uncertain about any of these, **ask the user**. Do not guess.
+
+## Starting a new feature (no spec exists yet)
+
+When the user describes a new feature, change, or idea and there is no matching spec, do not write code first. Walk them through this sequence and confirm at each step:
+
+1. **Propose the spec.** Draft a spec from `.arkos/specs/_template.md`. Pick the next four-digit ID. Fill problem, out-of-scope (at least three items), EARS requirements, acceptance criteria. Share it with the user for review.
+2. **Classify the data and trust boundaries.** Ask: does this touch personal information? Does it cross a trust boundary (auth, external API, file upload, etc.)? Set the frontmatter accordingly.
+3. **Privacy and threat model.** If personal data is touched, write the privacy notes (APP 1/5/11). If a trust boundary is crossed, write the threat model. Both before any code.
+4. **File ADRs.** For each architectural decision the spec implies (new library, new service, new auth pattern, new data model), draft an ADR from `.arkos/adr/_template.md`. Share for review.
+5. **Define contracts.** For new external interfaces, add an OpenAPI / JSON Schema / Protobuf file to `.arkos/contracts/`.
+6. **Get explicit approval.** Set `status: Approved` in the spec frontmatter only after the user confirms.
+7. **Then implement.** Write code, write tests mapped to each REQ-NNN in the acceptance criteria table, update `CHANGELOG.md` under `[Unreleased]`.
+8. **Branch and PR.** Create a feature branch, commit with `SPEC-NNNN` referenced, push, open a PR. CI runs plan-gate and build-gate.
+
+If the user says "just write the code, skip the spec", respond: "The constitution requires a spec before code. I can write a one-page spec in two minutes that captures what you just described, then implement immediately after you confirm. Shall I?" Then write it. Do not skip.
+
+## Modifying an existing feature
+
+1. Find the spec. If the change is in scope, update the spec (new REQ-IDs, new acceptance criteria), then implement.
+2. If the change is out of scope, write a new spec that references the original.
+3. If the change reverses or amends an architectural decision, file a new ADR that supersedes the old one. ADRs are immutable; do not edit existing ones.
+
+## When committing or opening a PR
+
+Before producing a commit message or PR description, confirm:
+
+- The commit message follows Conventional Commits and includes `SPEC-[0-9]+`.
+- `CHANGELOG.md` has been updated in this branch.
+- No banned patterns appear in the changed files.
+- Tests covering each new REQ have been added.
+- For UI changes, accessibility (WCAG 2.2 AA) has been considered.
+
+If any of these is missing, fix it before pushing. Do not push and hope CI passes.
 
 ## Tech stack
 
@@ -16,34 +67,6 @@ Replace this paragraph with a description of your project: what it is, who uses 
 - Test runner: your test runner (e.g. Vitest + Playwright)
 
 Replace every line above with your actual stack before your first commit.
-
-## How to work in this repo
-
-1. Read `.arkos/constitution.md`.
-2. Read the relevant spec in `.arkos/specs/` for the feature you are working on. If no spec exists, follow the "Starting a new feature" workflow below.
-3. Read open ADRs in `.arkos/adr/` that touch the area you are changing.
-4. Run the verify command (see Commands below) after every change. It must pass before you finish.
-5. Write commits using Conventional Commits format. Imperative mood. Reference the spec ID.
-
-## Starting a new feature (no spec exists yet)
-
-When the user describes a new feature, change, or idea and there is no matching spec in `.arkos/specs/`, do not write code first. Follow this sequence:
-
-1. **Write the spec.** Copy `.arkos/specs/_template.md` to `.arkos/specs/NNNN-<slug>.md` using the next available four-digit ID. Fill in every section: problem, out of scope (at least three items), EARS requirements, acceptance criteria table.
-2. **Declare data and trust boundaries.** Set `touches-personal-data` and `trust-boundaries-crossed` in the frontmatter. If either is non-empty, complete the privacy notes (APP 1, 5, 11) and create a STRIDE-lite threat model in `.arkos/threat-models/`.
-3. **File ADRs for architectural decisions.** If the feature introduces a new library, framework, external service, persistence model, auth model, or any other choice that future maintainers would want to know the reasoning behind, copy `.arkos/adr/_template.md` to `.arkos/adr/NNNN-<slug>.md` and complete it before writing code.
-4. **Define contracts at boundaries.** For any new external interface (HTTP API, message schema, file format), add the schema to `.arkos/contracts/` before implementing either side.
-5. **Confirm with the user.** Present the spec, ADRs, and threat model. Set `status: Approved` in the spec frontmatter only after the user accepts.
-6. **Then implement.** Write the code, write the tests that map to each REQ in the acceptance criteria table, and update `CHANGELOG.md` under `[Unreleased]`.
-7. **Open a PR on a feature branch.** Reference the spec ID in the commit message and PR title (`SPEC-NNNN`). CI runs the plan gate and build gate.
-
-If the user pushes back ("just write the code"), explain that the constitution mandates spec-before-code and offer to write a minimal spec to unblock them. Do not skip the spec.
-
-## Modifying an existing feature
-
-1. Find the spec in `.arkos/specs/`. If the change is in scope of the existing spec, update the spec (new REQ-IDs, new acceptance criteria) and link the PR to it.
-2. If the change is out of scope, write a new spec that references the original.
-3. If the change reverses or amends an architectural decision, file a new ADR that supersedes the old one. ADRs are immutable; do not edit existing ones.
 
 ## Commands
 
@@ -64,9 +87,7 @@ Replace each `<placeholder>` with your actual command before your first commit.
 - No unstructured debug output (e.g. `console.log`, `print`) in committed code. Use the project logger.
 - No bare `TODO` comments. Format: `TODO(#<issue-number>): description`.
 
-Add stack-specific banned patterns here before your first commit.
-
-Some patterns above are enforced by CI via `.arkos/scripts/check-banned-patterns.sh` (the bare-TODO check is universal; the rest depend on file extensions). The remainder are reviewer-enforced.
+Add stack-specific banned patterns here before your first commit. Flag these proactively when you are about to write them, not after.
 
 ## Context reading order
 

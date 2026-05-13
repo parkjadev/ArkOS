@@ -2,6 +2,6 @@
 description: ArkOS governance pointer
 alwaysApply: true
 ---
-This project is governed by ArkOS. The single source of truth for agent instructions is `AGENTS.md` at the repository root.
+This project is governed by ArkOS. `AGENTS.md` at the repository root is authoritative. Read it before any change.
 
-Read `AGENTS.md` before any change. Do not duplicate its content here.
+You are the active enforcer of the governance. Run the pre-flight checks in `AGENTS.md` before every code-changing action. If a check fails, stop and prompt the user. Do not duplicate `AGENTS.md` content here.
