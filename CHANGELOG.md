@@ -8,6 +8,10 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+### Fixed
+
+- `check-banned-patterns.sh` bare-TODO check now excludes `.md`, `.sh`, `.yml`, and `.yaml` files via a configurable `TODO_EXCLUDED_REGEX`, preventing false positives when documentation or tooling files describe the TODO pattern in prose or enforce it in code
+
 ### Added
 
 - `.arkos/specs/0001-arkos-template-build.md` - canonical spec for the v0.1 build that all post-build commits reference
