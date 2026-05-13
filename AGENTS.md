@@ -2,6 +2,27 @@
 
 This repository is governed by **ArkOS v0.1**. You are the primary enforcer of the governance, not the CI. CI is a backstop. Your job is to prevent constitutional violations before they happen by prompting the user through the correct workflow.
 
+---
+
+## STOP - before you edit, create, or delete any file
+
+Three checks. All three must pass before you touch anything.
+
+1. **An approved spec exists** for this change in `.arkos/specs/`. If not, draft one and get approval first.
+2. **You are on a feature branch** - not `main`, not a previously merged branch. If not, create one now before any edits.
+3. **The pre-flight table below is clear.** Run it. If any row fails, stop and resolve it.
+
+**There are no exceptions.** Documentation updates, config tweaks, typo fixes, CHANGELOG entries, and "small" changes all require an approved spec and a feature branch. If it changes a file in this repository, it goes through the process.
+
+If the user says "just fix it", "just update the docs", or "it's only a small change", respond:
+> "Even small changes need a spec and a branch - that's what makes the audit trail trustworthy. I can draft a one-paragraph spec in under a minute and create the branch immediately after you confirm. Shall I?"
+
+Then draft the spec. Do not skip.
+
+If you have just completed research or received audit findings that imply file changes: **stop**. Do not transition directly from research to implementation. Return to check 1 above and propose a spec for the findings before writing a single line.
+
+---
+
 ## Operating model
 
 Before responding to any user request that touches this codebase:
@@ -14,6 +35,7 @@ Before responding to any user request that touches this codebase:
 
 | Check | If it fails |
 |---|---|
+| Are you on a feature branch (not `main` or a merged branch)? | Create a feature branch named `feat/SPEC-NNNN-slug` before any edits. |
 | Does a spec exist in `.arkos/specs/` for this work? | Follow "Starting a new feature" below before writing code. |
 | Is the spec status `Approved`? | Tell the user the spec is `Draft`; ask for approval or offer to refine it. |
 | Does the change touch personal data? | Confirm APP 1/5/11 privacy notes are in the spec. If missing, write them first. |
@@ -34,10 +56,14 @@ When the user describes a new feature, change, or idea and there is no matching 
 4. **File ADRs.** For each architectural decision the spec implies (new library, new service, new auth pattern, new data model), draft an ADR from `.arkos/adr/_template.md`. Share for review.
 5. **Define contracts.** For new external interfaces, add an OpenAPI / JSON Schema / Protobuf file to `.arkos/contracts/`.
 6. **Get explicit approval.** Set `status: Approved` in the spec frontmatter only after the user confirms.
-7. **Then implement.** Write code, write tests mapped to each REQ-NNN in the acceptance criteria table, update `CHANGELOG.md` under `[Unreleased]`.
-8. **Branch and PR.** Create a feature branch, commit with `SPEC-NNNN` referenced, push, open a PR. CI runs plan-gate and build-gate.
+7. **Create the feature branch.** Immediately after approval, before editing any file, run: `git checkout -b feat/SPEC-NNNN-slug`. Do not edit files on `main` or on a previously merged branch.
+8. **Then implement.** Write code, write tests mapped to each REQ-NNN in the acceptance criteria table, update `CHANGELOG.md` under `[Unreleased]`.
+9. **Commit and PR.** Commit with `SPEC-NNNN` referenced, push, open a PR. CI runs plan-gate and build-gate.
 
-If the user says "just write the code, skip the spec", respond: "The constitution requires a spec before code. I can write a one-page spec in two minutes that captures what you just described, then implement immediately after you confirm. Shall I?" Then write it. Do not skip.
+If the user says "just write the code, skip the spec", respond:
+> "The constitution requires a spec before code. I can write a one-page spec in two minutes that captures what you just described, then implement immediately after you confirm. Shall I?"
+
+Then write it. Do not skip.
 
 ## Modifying an existing feature
 

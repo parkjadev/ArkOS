@@ -8,6 +8,14 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+### Changed
+
+- `AGENTS.md` restructured with a hard-stop block at the top, explicit branch check in the pre-flight table, branch creation moved before file editing in the new-feature workflow, pushback script for "just fix it" requests, and explicit instruction to pause after research findings before implementing (SPEC-0002)
+
+### Added
+
+- `.arkos/specs/0002-agents-md-hardening.md` - spec covering the AGENTS.md governance bypass hardening
+
 ### Fixed
 
 - `check-banned-patterns.sh` bare-TODO check now excludes `.md`, `.sh`, `.yml`, and `.yaml` files via a configurable `TODO_EXCLUDED_REGEX`, preventing false positives when documentation or tooling files describe the TODO pattern in prose or enforce it in code
