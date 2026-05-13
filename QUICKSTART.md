@@ -110,6 +110,8 @@ Open `AGENTS.md`. This is the single source of truth for every AI coding agent t
 
 Keep `AGENTS.md` under 150 lines. If your stack requires more detail, use nested `AGENTS.md` files closer to the relevant code.
 
+**Also edit `.arkos/arkos.yml`:** set `project` to your project name and `created` to today's date in YYYY-MM-DD format.
+
 ---
 
 ## Step 5 - Configure your IDE adapter
