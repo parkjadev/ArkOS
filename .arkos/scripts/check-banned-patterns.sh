@@ -7,9 +7,10 @@
 #   In CI (first commit, no HEAD~1): checks every tracked file.
 #   Locally: checks staged files only (pre-commit use).
 #
-# The bare-TODO check runs on non-markdown source and config files.
-# Markdown files (.md) are excluded because documentation legitimately
-# describes the TODO pattern without meaning to introduce it as a marker.
+# The bare-TODO check runs on application source files only.
+# Files matching TODO_EXCLUDED_REGEX are skipped: documentation (.md), shell
+# scripts (.sh), and CI config (.yml/.yaml) all legitimately reference the word
+# "TODO" when describing or enforcing the pattern. Edit this regex for your stack.
 # The console.log and ': any' checks are JavaScript/TypeScript examples and
 # only run on source files matching SOURCE_EXTENSIONS_REGEX below. This avoids
 # false positives in markdown and YAML (e.g. prose containing "to: any user").
@@ -19,6 +20,9 @@
 # guard below.
 
 set -euo pipefail
+
+# Extensions excluded from the bare-TODO check. Edit for your stack.
+TODO_EXCLUDED_REGEX='\.(md|sh|yml|yaml)$'
 
 # Source file extensions for the stack-specific checks. Edit for your stack.
 SOURCE_EXTENSIONS_REGEX='\.(js|jsx|ts|tsx|mjs|cjs)$'
@@ -60,8 +64,8 @@ while IFS= read -r file; do
 
   # Universal check: bare TODO without an issue reference.
   # Allowed format: TODO(#123): description
-  # Skipped for markdown files where "TODO" appears legitimately in documentation.
-  if ! echo "$file" | grep -qE '\.md$'; then
+  # Skipped for file types in TODO_EXCLUDED_REGEX (docs, shell scripts, CI config).
+  if ! echo "$file" | grep -qE "$TODO_EXCLUDED_REGEX"; then
     if grep -nP "TODO(?!\(#[0-9]+\))" "$file" >/dev/null 2>&1; then
       grep -nP "TODO(?!\(#[0-9]+\))" "$file"
       echo "ERROR: Bare TODO in $file. Use TODO(#<issue-number>) format."
