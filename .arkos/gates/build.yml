@@ -1,0 +1,35 @@
+gate: build
+question: "Is what we built correct, safe and accessible?"
+criteria:
+  - id: CRT-009
+    description: Lint clean
+    evidence: Lint command exits 0
+    automated: true
+  - id: CRT-010
+    description: Typecheck clean
+    evidence: Typecheck command exits 0
+    automated: true
+  - id: CRT-011
+    description: Unit tests pass
+    evidence: Unit test report uploaded with no failures
+    automated: true
+  - id: CRT-012
+    description: Integration tests pass
+    evidence: Integration test report uploaded with no failures
+    automated: true
+  - id: CRT-013
+    description: Accessibility passes WCAG 2.2 AA
+    evidence: axe-core via Playwright reports zero violations
+    automated: true
+  - id: CRT-014
+    description: Contracts honoured
+    evidence: Contract tests exit 0
+    automated: true
+  - id: CRT-015
+    description: No banned patterns
+    evidence: check-banned-patterns.sh exits 0
+    automated: true
+  - id: CRT-016
+    description: Spec ID referenced in PR
+    evidence: PR title or body contains SPEC-[0-9]+ pattern
+    automated: true

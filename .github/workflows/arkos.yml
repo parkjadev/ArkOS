@@ -1,0 +1,114 @@
+name: arkos
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  plan-gate:
+    name: Plan gate — spec reference check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check spec reference
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: bash .arkos/scripts/check-spec-link.sh
+
+  build-gate:
+    name: Build gate — correctness, safety and accessibility
+    runs-on: ubuntu-latest
+    needs: plan-gate
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        # Replace this step with your stack's install command.
+        # Example for Node.js: run: pnpm install --frozen-lockfile
+        run: echo "REPLACE: install dependencies for your stack"
+
+      - name: Lint
+        # Replace with your stack's lint command.
+        # Example: run: pnpm lint
+        run: echo "REPLACE: run linter for your stack"
+
+      - name: Typecheck
+        # Replace with your stack's typecheck command.
+        # Example: run: pnpm typecheck
+        run: echo "REPLACE: run typechecker for your stack"
+
+      - name: Unit tests
+        # Replace with your stack's unit test command.
+        # Example: run: pnpm test:unit
+        run: echo "REPLACE: run unit tests for your stack"
+
+      - name: Integration tests
+        # Replace with your stack's integration test command.
+        # Example: run: pnpm test:integration
+        run: echo "REPLACE: run integration tests for your stack"
+
+      - name: Accessibility tests (WCAG 2.2 AA)
+        # Replace with your stack's accessibility test command.
+        # Example: run: pnpm test:a11y
+        run: echo "REPLACE: run accessibility tests for your stack"
+
+      - name: Contract tests
+        # Replace with your stack's contract test command.
+        # Example: run: pnpm test:contracts
+        run: echo "REPLACE: run contract tests for your stack"
+
+      - name: Banned pattern check
+        run: bash .arkos/scripts/check-banned-patterns.sh
+
+  ship-gate:
+    name: Ship gate — release safety and traceability
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: build-gate
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Generate SBOM (CycloneDX)
+        # Replace with your stack's SBOM generation command.
+        # Example for Node.js: run: pnpm exec cyclonedx-npm --output-file sbom.cdx.json
+        run: echo "REPLACE: generate CycloneDX SBOM for your stack"
+
+      - name: Upload SBOM artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.cdx.json
+          if-no-files-found: warn
+
+      - name: Check CHANGELOG updated
+        run: bash .arkos/scripts/check-changelog.sh
+
+      - name: SAST — static analysis
+        uses: github/codeql-action/analyze@v3
+
+      - name: Dependency vulnerability scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          severity: CRITICAL,HIGH
+
+  run-readiness:
+    name: Run readiness — operational checklist
+    runs-on: ubuntu-latest
+    needs: build-gate
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run readiness check
+        run: |
+          echo "Run gate criteria are documented in .arkos/gates/run.yml"
+          echo "Complete the run-readiness checklist in .arkos/proof-sheet.md before promoting to production."
+          echo "CI cannot automate all run gate criteria. Human sign-off is required."

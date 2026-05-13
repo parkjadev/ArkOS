@@ -1,0 +1,19 @@
+gate: run
+question: "Can we operate this without surprise?"
+criteria:
+  - id: CRT-023
+    description: SLOs defined
+    evidence: Runbook lists at least one numeric SLO target
+    automated: false
+  - id: CRT-024
+    description: Runbook exists and covers required sections
+    evidence: Runbook covers health checks, common alerts, and rollback procedure
+    automated: false
+  - id: CRT-025
+    description: Observability wired
+    evidence: Structured logs present; one metric per SLO; one alert per failure mode
+    automated: false
+  - id: CRT-026
+    description: On-call rotation recorded
+    evidence: Runbook lists on-call contact or rotation name
+    automated: false

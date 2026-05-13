@@ -1,0 +1,15 @@
+gate: research
+question: "Are we solving the right problem?"
+criteria:
+  - id: CRT-001
+    description: Problem statement exists in spec
+    evidence: Spec has a non-empty ## Problem section
+    automated: false
+  - id: CRT-002
+    description: Prior art noted
+    evidence: Spec lists alternatives or links to ADRs
+    automated: false
+  - id: CRT-003
+    description: Out of scope is explicit
+    evidence: Spec has ## Out of scope with at least three items
+    automated: true

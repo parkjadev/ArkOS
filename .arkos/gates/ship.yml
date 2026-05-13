@@ -1,0 +1,27 @@
+gate: ship
+question: "Is this safe to release and traceable?"
+criteria:
+  - id: CRT-017
+    description: CHANGELOG updated
+    evidence: CHANGELOG.md appears in the diff for this release
+    automated: true
+  - id: CRT-018
+    description: Version bumped per SemVer
+    evidence: Version field in project manifest has been incremented
+    automated: true
+  - id: CRT-019
+    description: SBOM produced
+    evidence: sbom.cdx.json artefact uploaded to CI workflow run
+    automated: true
+  - id: CRT-020
+    description: SAST clean
+    evidence: SAST tool reports no Critical or High severity findings
+    automated: true
+  - id: CRT-021
+    description: Dependency scan clean
+    evidence: Dependency scanner reports no Critical or High severity vulnerabilities
+    automated: true
+  - id: CRT-022
+    description: Threat model exists where required
+    evidence: For features crossing trust boundaries, spec references .arkos/threat-models/
+    automated: false
