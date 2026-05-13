@@ -97,13 +97,14 @@ First governed commit: 30 to 60 minutes. Full CI wiring for a real stack: an aft
 
 1. Click **"Use this template"** on GitHub.
 2. Clone your new repo.
-3. Read `.arkos/constitution.md`. Confirm or adjust the process rules.
-4. Edit `AGENTS.md` - replace placeholder stack, commands, and banned patterns.
-5. Edit `.arkos/arkos.yml` - set `project` and `created` date.
-6. Edit `.github/workflows/arkos.yml` - replace placeholder build steps with your stack's commands.
-7. Write your first spec in `.arkos/specs/0001-<slug>.md`.
-8. Create a feature branch, commit with a spec reference (`SPEC-0001`), and open a PR.
-9. CI runs the plan gate and build gate on the PR. Merge when green.
+3. **Enable branch protection on `main`** with required status checks `plan-gate` and `build-gate`. Without this, every gate is opt-in.
+4. Read `.arkos/constitution.md`. Confirm or adjust the process rules.
+5. Edit `AGENTS.md` - replace placeholder stack, commands, and banned patterns.
+6. Edit `.arkos/arkos.yml` - set `project` and `created` date.
+7. Edit `.github/workflows/arkos.yml` - replace placeholder build steps with your stack's commands.
+8. Write your first spec in `.arkos/specs/0001-<slug>.md`.
+9. Create a feature branch, commit with a spec reference (`SPEC-0001`), and open a PR.
+10. CI runs the plan gate and build gate on the PR. Merge when green.
 
 ---
 

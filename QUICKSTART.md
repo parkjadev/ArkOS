@@ -32,7 +32,45 @@ Your repository now contains the full ArkOS file tree. Nothing is running yet. T
 
 ---
 
-## Step 2 - Read the constitution
+## Step 2 - Enable branch protection on `main`
+
+ArkOS enforces governance through CI gates that run on pull requests. None of those gates are mandatory unless `main` is protected. Without branch protection, any contributor (including the agent) can push directly to `main` and bypass every check.
+
+**Required settings on the `main` branch:**
+
+- Require a pull request before merging
+- Require status checks to pass before merging: `plan-gate`, `build-gate`
+- Do not allow bypassing the above
+
+**Via the GitHub UI:**
+
+1. Go to your repository's **Settings** then **Branches**.
+2. Click **Add branch protection rule**.
+3. Branch name pattern: `main`.
+4. Tick: **Require a pull request before merging**.
+5. Tick: **Require status checks to pass before merging**. Search for and add `plan-gate` and `build-gate`. (These status checks appear in the list only after the workflow has run at least once.)
+6. Tick: **Do not allow bypassing the above settings**.
+7. Click **Create**.
+
+**Via the `gh` CLI (run from your local clone):**
+
+```
+gh api -X PUT "repos/:owner/:repo/branches/main/protection" \
+  -F required_status_checks.strict=true \
+  -F 'required_status_checks.contexts[]=plan-gate' \
+  -F 'required_status_checks.contexts[]=build-gate' \
+  -F required_pull_request_reviews.required_approving_review_count=0 \
+  -F enforce_admins=true \
+  -F restrictions=
+```
+
+Adjust `required_approving_review_count` upward once you have collaborators.
+
+If branch protection is not enabled, ArkOS becomes opt-in rather than enforced. Adopt this step before your first commit.
+
+---
+
+## Step 3 - Read the constitution
 
 Open `.arkos/constitution.md`. Read it in full before touching any other file.
 
@@ -43,7 +81,7 @@ It contains:
 
 ---
 
-## Step 3 - Personalise AGENTS.md
+## Step 4 - Personalise AGENTS.md
 
 Open `AGENTS.md`. This is the single source of truth for every AI coding agent that works in this repo. Replace every placeholder section before your first commit.
 
@@ -74,7 +112,7 @@ Keep `AGENTS.md` under 150 lines. If your stack requires more detail, use nested
 
 ---
 
-## Step 4 - Configure your IDE adapter
+## Step 5 - Configure your IDE adapter
 
 Your IDE adapter is already wired. You only need to open and review it.
 
@@ -96,7 +134,7 @@ Open `.cursor/rules/arkos.mdc`. No changes needed for basic use.
 
 ---
 
-## Step 5 - Wire your CI commands
+## Step 6 - Wire your CI commands
 
 Open `.github/workflows/arkos.yml`.
 
@@ -139,7 +177,7 @@ Deployment is deliberately absent. Add a separate `.github/workflows/deploy.yml`
 
 ---
 
-## Step 6 - Write your first spec
+## Step 7 - Write your first spec
 
 Copy the spec template:
 
@@ -163,7 +201,7 @@ Set `status: Approved` before raising a PR.
 
 ---
 
-## Step 7 - Make your first commit on a feature branch
+## Step 8 - Make your first commit on a feature branch
 
 Create a feature branch, stage your personalised files, and commit using Conventional Commits format. The commit message must reference the spec.
 
@@ -179,7 +217,7 @@ Also update `CHANGELOG.md` with an entry for this change. The build gate checks 
 
 ---
 
-## Step 8 - Push the branch and open a PR
+## Step 9 - Push the branch and open a PR
 
 ```
 git push -u origin feat/initialise
@@ -216,7 +254,7 @@ The ship gate runs on pushes to `main`. Common failure reasons after you have re
 
 ---
 
-## Step 9 - Before production
+## Step 10 - Before production
 
 Before promoting any release to production, complete the run readiness checklist in `.arkos/proof-sheet.md`:
 
@@ -229,7 +267,7 @@ The `run-readiness` CI job prints this checklist as a reminder but does not bloc
 
 ---
 
-## Step 10 - For procurement
+## Step 11 - For procurement
 
 Fill in `.arkos/proof-sheet.md` with your project name, owner name, and review date. Share the completed file with the procurement reviewer alongside a link to the repository. The evidence trail (specs, ADRs, SBOM artefacts, SAST reports) is all in the repo.
 
