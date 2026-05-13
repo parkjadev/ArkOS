@@ -7,7 +7,7 @@ on:
 
 jobs:
   plan-gate:
-    name: Plan gate — spec reference check
+    name: Plan gate - spec reference check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +21,7 @@ jobs:
         run: bash .arkos/scripts/check-spec-link.sh
 
   build-gate:
-    name: Build gate — correctness, safety and accessibility
+    name: Build gate - correctness, safety and accessibility
     runs-on: ubuntu-latest
     needs: plan-gate
     steps:
@@ -66,7 +66,7 @@ jobs:
         run: bash .arkos/scripts/check-banned-patterns.sh
 
   ship-gate:
-    name: Ship gate — release safety and traceability
+    name: Ship gate - release safety and traceability
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     needs: build-gate
@@ -90,7 +90,7 @@ jobs:
       - name: Check CHANGELOG updated
         run: bash .arkos/scripts/check-changelog.sh
 
-      - name: SAST — static analysis
+      - name: SAST - static analysis
         uses: github/codeql-action/analyze@v3
 
       - name: Dependency vulnerability scan
