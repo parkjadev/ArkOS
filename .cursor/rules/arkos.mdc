@@ -1,0 +1,7 @@
+---
+description: ArkOS governance pointer
+alwaysApply: true
+---
+This project is governed by ArkOS. The single source of truth for agent instructions is `AGENTS.md` at the repository root.
+
+Read `AGENTS.md` before any change. Do not duplicate its content here.

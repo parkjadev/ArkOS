@@ -1,0 +1,31 @@
+# ArkOS framework configuration
+# This file declares the framework version and modules active in this repository.
+# It is read by ArkOS tooling (npx arkos upgrade, npx arkos proof).
+
+# The version of the ArkOS framework this repository was initialised with.
+arkos-version: "0.1"
+
+# Short identifier for this project. Used in proof sheet generation.
+project: "<your-project-name>"
+
+# Conformance declaration. Update if your project adopts additional standards.
+conformance:
+  security: "OWASP ASVS v5.0.0 Level 1"
+  cyber: "ASD Essential Eight ML1"
+  privacy: "APP 1, 5, 11"
+  accessibility: "WCAG 2.2 AA"
+  sbom: "CycloneDX 1.6+"
+
+# Modules in use. Add stack-specific modules as you adopt them.
+# Example: arkos-module-nextjs, arkos-module-fastify, arkos-module-llm-feature
+modules: []
+
+# IDE adapters active in this repository.
+# Set to true only for adapters that have a corresponding file wired.
+ide-adapters:
+  claude-code: true      # CLAUDE.md present
+  github-copilot: true   # .github/copilot-instructions.md present
+  cursor: true           # .cursor/rules/arkos.mdc present
+
+# Date this repository was initialised with ArkOS.
+created: "2026-05-13"
