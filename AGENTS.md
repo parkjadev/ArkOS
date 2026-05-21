@@ -46,6 +46,21 @@ Before responding to any user request that touches this codebase:
 
 If you are uncertain about any of these, **ask the user**. Do not guess.
 
+| Does this work need an approved PRD? | For a **new product** (greenfield): `.arkos/prd/product.md` must exist with `status: Approved` before SPEC-0001. For features on an existing product, use the spec for that feature only. |
+
+## Starting a new product (greenfield)
+
+When the developer describes a **product idea** (new repository adoption or empty `product.md`), run PRD discovery before any foundation spec or code.
+
+1. **Read** [`.arkos/prompts/prd-discovery.md`](.arkos/prompts/prd-discovery.md) in full.
+2. **Interview** using every required question (Q1 to Q15). Ask in small batches; do not guess missing answers.
+3. **Write** [`.arkos/prd/product.md`](.arkos/prd/product.md) from [`.arkos/prd/_template.md`](.arkos/prd/_template.md) with `status: Draft`.
+4. **Review** with the developer. Set `status: Approved` only after explicit confirmation (e.g. "approve PRD").
+5. **Draft SPEC-0001** (foundation: architecture + scaffold from the PRD). Map PRD MVP rows to proposed SPEC-0002+ IDs. Do not implement until SPEC-0001 is also Approved.
+6. **Feature work** from SPEC-0002 onwards follows "Starting a new feature" below.
+
+While the PRD is `Draft`, do not scaffold stacks, approve SPEC-0001, or write application code.
+
 ## Starting a new feature (no spec exists yet)
 
 When the user describes a new feature, change, or idea and there is no matching spec, do not write code first. Walk them through this sequence and confirm at each step:
@@ -120,9 +135,10 @@ Add stack-specific banned patterns here before your first commit. Flag these pro
 ## Context reading order
 
 1. `.arkos/constitution.md`
-2. The spec for the feature you are working on
-3. The nearest README to the file being edited
-4. Open ADRs that touch the area
+2. `.arkos/prd/product.md` (if it exists) for product intent and roadmap
+3. The spec for the feature you are working on
+4. The nearest README to the file being edited
+5. Open ADRs that touch the area
 
 ## Nested AGENTS.md
 

@@ -115,6 +115,8 @@ jobs:
       - name: CHANGELOG updated
         env:
           GITHUB_BASE_REF: ${{ github.base_ref }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: bash .arkos/scripts/check-changelog.sh
 
   ship-gate:

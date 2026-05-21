@@ -179,7 +179,20 @@ Deployment is deliberately absent. Add a separate `.github/workflows/deploy.yml`
 
 ---
 
-## Step 7 - Write your first spec
+## Step 7 - Create the product PRD (greenfield)
+
+If this repository is a **new product** (not a framework-only repo like ArkOS itself), create the PRD before your foundation spec.
+
+1. Describe your product idea to the agent in one or two paragraphs.
+2. The agent runs the interview in `.arkos/prompts/prd-discovery.md` and asks clarifying questions (users, MVP, non-goals, stack, privacy, trust boundaries).
+3. The agent writes `.arkos/prd/product.md` from `.arkos/prd/_template.md`.
+4. Review the PRD. Tell the agent when to set `status: Approved`.
+
+Do not scaffold application code until the PRD is Approved.
+
+---
+
+## Step 8 - Write your foundation spec (SPEC-0001)
 
 Copy the spec template:
 
@@ -189,7 +202,7 @@ cp .arkos/specs/_template.md .arkos/specs/0001-<feature-slug>.md
 
 Open the new file and complete every section:
 
-1. Set `id: SPEC-0001` and `slug: <feature-slug>` in the frontmatter.
+1. Set `id: SPEC-0001` and `slug: <foundation-slug>` in the frontmatter (foundation spec: architecture and scaffold from the PRD).
 2. Set `status: Draft` to start, then change to `Approved` when ready.
 3. Write `## Problem` - one paragraph, who benefits, why this exists.
 4. Write `## Out of scope` - at least three explicit exclusions.
@@ -203,7 +216,7 @@ Set `status: Approved` before raising a PR.
 
 ---
 
-## Step 8 - Make your first commit on a feature branch
+## Step 9 - Make your first commit on a feature branch
 
 Create a feature branch, stage your personalised files, and commit using Conventional Commits format. The commit message must reference the spec.
 
@@ -219,7 +232,7 @@ Also update `CHANGELOG.md` with an entry for this change. The build gate checks 
 
 ---
 
-## Step 9 - Push the branch and open a PR
+## Step 10 - Push the branch and open a PR
 
 ```
 git push -u origin feat/initialise
@@ -256,7 +269,7 @@ The ship gate runs on pushes to `main`. Common failure reasons after you have re
 
 ---
 
-## Step 10 - Before production
+## Step 11 - Before production
 
 Before promoting any release to production, complete the run readiness checklist in `.arkos/proof-sheet.md`:
 
@@ -269,7 +282,7 @@ The `run-readiness` CI job prints this checklist as a reminder but does not bloc
 
 ---
 
-## Step 11 - For procurement
+## Step 12 - For procurement
 
 Fill in `.arkos/proof-sheet.md` with your project name, owner name, and review date. Share the completed file with the procurement reviewer alongside a link to the repository. The evidence trail (specs, ADRs, SBOM artefacts, SAST reports) is all in the repo.
 
@@ -281,6 +294,8 @@ Fill in `.arkos/proof-sheet.md` with your project name, owner name, and review d
 |---|---|
 | `AGENTS.md` | Agent instructions - edit this first |
 | `.arkos/constitution.md` | Project non-negotiables |
+| `.arkos/prd/_template.md` | PRD template - agent fills `product.md` after discovery interview |
+| `.arkos/prompts/prd-discovery.md` | Required questions when starting a new product |
 | `.arkos/specs/_template.md` | Spec template - copy for each feature |
 | `.arkos/adr/_template.md` | ADR template - copy for each decision |
 | `.arkos/threat-models/_template.md` | Threat model template - copy for trust-boundary features |

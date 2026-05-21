@@ -10,12 +10,21 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ### Changed
 
+- `.arkos/scripts/check-changelog.sh` now fetches `PR_BASE_SHA` and `PR_HEAD_SHA` so shallow PR merge checkouts detect CHANGELOG updates reliably (SPEC-0004)
+- `AGENTS.md` adds greenfield "Starting a new product" workflow and PRD pre-flight check (SPEC-0004)
+- `.arkos/constitution.md` adds "PRD before foundation" process rule (SPEC-0004)
+- `QUICKSTART.md` adds Step 7 PRD discovery before foundation spec; renumbers later steps (SPEC-0004)
 - `AGENTS.md` "When committing or opening a PR" checklist now requires `Closes #N` in the PR body so GitHub issues auto-close on merge (SPEC-0003)
 - `AGENTS.md` restructured with a hard-stop block at the top, explicit branch check in the pre-flight table, GitHub issue creation step before branch creation, branch creation moved before file editing in the new-feature workflow, pushback script for "just fix it" requests, and explicit instruction to pause after research findings before implementing (SPEC-0002)
 - `README.md` quickstart step 6 and `QUICKSTART.md` Step 4 now specify YYYY-MM-DD format for the `created` field in `arkos.yml` (SPEC-0003)
 
 ### Added
 
+- `.arkos/prd/_template.md` and `.arkos/prd/README.md` for product requirements before SPEC-0001 (SPEC-0004)
+- `.arkos/prompts/prd-discovery.md` with required clarification questions (Q1 to Q15) for agent interviews (SPEC-0004)
+- `.arkos/prompts/README.md` index for agent playbooks (SPEC-0004)
+- `.arkos/specs/0004-prd-discovery-workflow.md` - spec for PRD template and discovery flow (SPEC-0004)
+- `README.md` table rows for PRD template and discovery prompt (SPEC-0004)
 - `.arkos/contracts/_template.md` - minimal contract stub for OpenAPI / JSON Schema / Protobuf; satisfies the AGENTS.md pre-flight check for new external interfaces (SPEC-0003)
 - `.arkos/specs/0003-documentation-accuracy.md` - spec covering documentation fixes and contracts template
 - `.arkos/specs/0002-agents-md-hardening.md` - spec covering the AGENTS.md governance bypass hardening
