@@ -16,6 +16,8 @@ It is a files-and-conventions framework. No runtime. No inference proxy. No vend
 | IDE adapters | `CLAUDE.md`, `.cursor/rules/arkos.mdc`, `.github/copilot-instructions.md` | Thin pointers to `AGENTS.md`; no duplicated content |
 | Framework config | `.arkos/arkos.yml` | Framework version, conformance level, IDE adapters, modules |
 | Project constitution | `.arkos/constitution.md` | Five non-negotiable principles that survive across sessions and agents |
+| PRD template | `.arkos/prd/_template.md` | Product intent before foundation; filled via PRD discovery interview |
+| PRD discovery prompt | `.arkos/prompts/prd-discovery.md` | Required questions when the developer describes a new product idea |
 | Spec template | `.arkos/specs/_template.md` | EARS-based requirements before any agent touches a file |
 | ADR template | `.arkos/adr/_template.md` | Nygard-format architectural decisions; immutable once accepted |
 | Threat model template | `.arkos/threat-models/_template.md` | STRIDE-lite, one per trust-boundary feature |

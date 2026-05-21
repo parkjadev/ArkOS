@@ -21,6 +21,7 @@ These are the rules that survive across sessions, agents and contributors. If yo
 ## Process
 
 - **Plan before code.** Every non-trivial change has a spec in `.arkos/specs/` before any implementation begins.
+- **PRD before foundation.** Greenfield products document intent in `.arkos/prd/product.md` (Approved) before SPEC-0001 architecture and scaffold work begins.
 - **Issue before branch.** Every branch maps to a tracked issue.
 - **Zero-error boot.** The verify command is green on `main`, always.
 - **ADRs are immutable.** Supersede; do not edit.
