@@ -3,7 +3,7 @@ id: SPEC-0003
 slug: documentation-accuracy
 title: Fix documentation inaccuracies, add contracts template, wire issue auto-close
 status: Approved
-owner: "@parkjadev"
+owner: "@ark360-hq"
 created: 2026-05-13
 touches-personal-data: false
 trust-boundaries-crossed: false

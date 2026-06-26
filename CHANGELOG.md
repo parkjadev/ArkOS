@@ -10,6 +10,9 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ### Changed
 
+- `.arkos/specs/0001` to `0004` `owner` fields updated from `@parkjadev` / `@ARK360` to `@ark360-hq` after the repository moved to the `ark360-hq` organisation (SPEC-0006)
+- `CHANGELOG.md` `[0.1.0]` release link now points to `ark360-hq/arkos` (SPEC-0006)
+- `.arkos/arkos.yml` `project` set to `arkos` (SPEC-0006)
 - `.arkos/scripts/check-changelog.sh` now fetches `PR_BASE_SHA` and `PR_HEAD_SHA` so shallow PR merge checkouts detect CHANGELOG updates reliably (SPEC-0004)
 - `AGENTS.md` adds greenfield "Starting a new product" workflow and PRD pre-flight check (SPEC-0004)
 - `.arkos/constitution.md` adds "PRD before foundation" process rule (SPEC-0004)
@@ -20,6 +23,7 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ### Added
 
+- `.arkos/specs/0006-org-migration.md` - spec covering repository reference updates after the ark360-hq migration (SPEC-0006)
 - `.arkos/prd/_template.md` and `.arkos/prd/README.md` for product requirements before SPEC-0001 (SPEC-0004)
 - `.arkos/prompts/prd-discovery.md` with required clarification questions (Q1 to Q15) for agent interviews (SPEC-0004)
 - `.arkos/prompts/README.md` index for agent playbooks (SPEC-0004)
@@ -110,4 +114,4 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[0.1.0]: https://github.com/<your-org>/<your-repo>/releases/tag/v0.1.0
+[0.1.0]: https://github.com/ark360-hq/arkos/releases/tag/v0.1.0

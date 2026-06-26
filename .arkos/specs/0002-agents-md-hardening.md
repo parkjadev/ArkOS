@@ -3,7 +3,7 @@ id: SPEC-0002
 slug: agents-md-hardening
 title: Harden AGENTS.md against task-momentum governance bypass
 status: Approved
-owner: "@parkjadev"
+owner: "@ark360-hq"
 created: 2026-05-13
 touches-personal-data: false
 trust-boundaries-crossed: false
