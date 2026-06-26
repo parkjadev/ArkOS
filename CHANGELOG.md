@@ -23,6 +23,7 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ### Added
 
+- `.arkos/specs/0007-ci-check-name-consistency.md` - spec covering CI check-name alignment with documented branch-protection contexts (SPEC-0007)
 - `.arkos/specs/0006-org-migration.md` - spec covering repository reference updates after the ark360-hq migration (SPEC-0006)
 - `.arkos/prd/_template.md` and `.arkos/prd/README.md` for product requirements before SPEC-0001 (SPEC-0004)
 - `.arkos/prompts/prd-discovery.md` with required clarification questions (Q1 to Q15) for agent interviews (SPEC-0004)
@@ -36,6 +37,7 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ### Fixed
 
+- `.github/workflows/arkos.yml` gate jobs no longer override `name:`, so their check-run names match the `plan-gate` / `build-gate` / `ship-gate` / `run-readiness` contexts documented in `QUICKSTART.md` and `README.md`; previously branch protection requiring those contexts could never match and blocked merges (SPEC-0007)
 - `docs/framework.md` conformance summary referenced non-existent `.arkos/proof-essential-eight.md`; corrected to `.arkos/proof-sheet.md` (SPEC-0003)
 - `check-banned-patterns.sh` bare-TODO check now excludes `.md`, `.sh`, `.yml`, and `.yaml` files via a configurable `TODO_EXCLUDED_REGEX`, preventing false positives when documentation or tooling files describe the TODO pattern in prose or enforce it in code
 
