@@ -3,7 +3,7 @@ id: SPEC-0004
 slug: prd-discovery-workflow
 title: PRD discovery template and agent interview
 status: Approved
-owner: "@parkjadev"
+owner: "@ark360-hq"
 created: 2026-05-21
 touches-personal-data: false
 trust-boundaries-crossed: false

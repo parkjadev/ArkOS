@@ -3,7 +3,7 @@ id: SPEC-0001
 slug: arkos-template-build
 title: ArkOS v0.1 template repository build
 status: Approved
-owner: "@ARK360"
+owner: "@ark360-hq"
 created: 2026-05-13
 touches-personal-data: false
 trust-boundaries-crossed: false

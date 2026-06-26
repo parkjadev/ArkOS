@@ -6,7 +6,7 @@
 arkos-version: "0.1"
 
 # Short identifier for this project. Used in proof sheet generation.
-project: "<your-project-name>"
+project: "arkos"
 
 # Conformance declaration. Update if your project adopts additional standards.
 conformance:
