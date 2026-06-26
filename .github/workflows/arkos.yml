@@ -36,7 +36,6 @@ permissions:
 
 jobs:
   plan-gate:
-    name: Plan gate - spec reference check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +50,6 @@ jobs:
         run: bash .arkos/scripts/check-spec-link.sh
 
   build-gate:
-    name: Build gate - correctness, safety and accessibility
     runs-on: ubuntu-latest
     needs: plan-gate
     steps:
@@ -122,7 +120,6 @@ jobs:
   ship-gate:
     # Ship gate: collects release evidence. Does NOT deploy.
     # Add deployment steps in a separate workflow file.
-    name: Ship gate - release safety and traceability
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     needs: build-gate
@@ -182,7 +179,6 @@ jobs:
           echo "REPLACE: configure a dependency scan step for your stack (see comment above)"
 
   run-readiness:
-    name: Run readiness - operational checklist
     runs-on: ubuntu-latest
     needs: build-gate
     if: github.ref == 'refs/heads/main'
