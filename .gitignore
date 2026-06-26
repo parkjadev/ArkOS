@@ -1,0 +1,8 @@
+# Claude Code personal overrides (copy from settings.local.json.example)
+.claude/settings.local.json
+
+# MCP configuration copied from example (team may commit .mcp.json when ready)
+.mcp.json
+
+# Private Claude project notes
+CLAUDE.local.md

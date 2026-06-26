@@ -1,0 +1,4 @@
+{
+  "_comment": "Team-shared Claude Code defaults for this repository. Governance lives in AGENTS.md; do not restate policy here. Hooks are disabled by default - see .claude/hooks/README.md to enable the sample block-edit-on-main hook. Personal overrides go in settings.local.json (gitignored; copy from settings.local.json.example).",
+  "hooks": {}
+}

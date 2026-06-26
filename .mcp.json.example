@@ -1,0 +1,18 @@
+{
+  "_comment": "EXAMPLE ONLY. Copy to .mcp.json when your team is ready. Not required for ArkOS. Servers below will not work until you install and configure them. Never commit secrets.",
+  "mcpServers": {
+    "example-memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "disabled": true
+    },
+    "example-github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "set-in-settings.local.json-or-env-not-in-git"
+      },
+      "disabled": true
+    }
+  }
+}

@@ -10,6 +10,7 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ### Changed
 
+- `.arkos/arkos.yml` bumped to `arkos-version: "0.2"` and now declares `claude-extension: true` under `ide-adapters` (SPEC-0005)
 - `.arkos/specs/0001` to `0004` `owner` fields updated from `@parkjadev` / `@ARK360` to `@ark360-hq` after the repository moved to the `ark360-hq` organisation (SPEC-0006)
 - `CHANGELOG.md` `[0.1.0]` release link now points to `ark360-hq/arkos` (SPEC-0006)
 - `.arkos/arkos.yml` `project` set to `arkos` (SPEC-0006)
@@ -23,6 +24,10 @@ This project follows [Keep a Changelog 1.1](https://keepachangelog.com/en/1.1.0/
 
 ### Added
 
+- `.claude/` Claude Code extension layer: `README.md`, `settings.json` (hooks disabled by default), `settings.local.json.example`, `rules/arkos.md`, `commands/governance-check.md`, `commands/scaffold-spec.md`, `hooks/block-edit-on-main.sh`, and `hooks/README.md` (SPEC-0005)
+- `.arkos/specs/0005-claude-code-extension-layer.md` and `.arkos/adr/0004-claude-code-extension-layer.md` - spec and ADR for the optional Claude Code extension layer (SPEC-0005)
+- `.mcp.json.example` example-only MCP template, and `.gitignore` ignoring `.claude/settings.local.json`, `.mcp.json`, and `CLAUDE.local.md` (SPEC-0005)
+- `docs/v0.2-enhancement-proposal.md` - v0.2 enhancement proposal for the extension layer (SPEC-0005)
 - `.arkos/specs/0007-ci-check-name-consistency.md` - spec covering CI check-name alignment with documented branch-protection contexts (SPEC-0007)
 - `.arkos/specs/0006-org-migration.md` - spec covering repository reference updates after the ark360-hq migration (SPEC-0006)
 - `.arkos/prd/_template.md` and `.arkos/prd/README.md` for product requirements before SPEC-0001 (SPEC-0004)
