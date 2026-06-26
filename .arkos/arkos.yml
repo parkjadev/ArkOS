@@ -3,7 +3,7 @@
 # It is read by ArkOS tooling (npx arkos upgrade, npx arkos proof).
 
 # The version of the ArkOS framework this repository was initialised with.
-arkos-version: "0.1"
+arkos-version: "0.2"
 
 # Short identifier for this project. Used in proof sheet generation.
 project: "arkos"
@@ -26,6 +26,7 @@ ide-adapters:
   claude-code: true      # CLAUDE.md present
   github-copilot: true   # .github/copilot-instructions.md present
   cursor: true           # .cursor/rules/arkos.mdc present
+  claude-extension: true # .claude/ rules, commands, and hooks present
 
 # Date this repository was initialised with ArkOS. Replace with today's date (YYYY-MM-DD) before your first commit.
 created: "<YYYY-MM-DD>"
